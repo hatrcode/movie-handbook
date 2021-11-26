@@ -12,7 +12,7 @@ const MovieSearch = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=d505895710053abffc3e8ea662eda4d9&language=en-US&query=${query}&page=1&include_adult=false`;
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.API_KEY}&language=en-US&query=${query}&page=1&include_adult=false`;
 
     setIsLoading(true);
     try {
