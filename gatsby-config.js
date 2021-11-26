@@ -1,6 +1,10 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
+
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://movie-explore.netlify.app/",
+    siteUrl: "https://movie-handbook.netlify.app/",
     title: "Movie Handbook",
   },
   plugins: [
