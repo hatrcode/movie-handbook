@@ -465,7 +465,7 @@ Footer
 
 /*
 =============== 
-Recipe Search
+Search
 ===============
 */
 
@@ -635,13 +635,13 @@ Item Card
 
 /*
 =============== 
-Recipe Page
+Page
 ===============
 */
 
 .main-page {
   min-height: calc(100vh - 5rem - 7rem);
-  margin: 3rem 1rem;
+  margin: 3rem;
 }
 
 .recipe-header {
@@ -735,44 +735,4 @@ table td {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 1rem;
-}
-
-/* Diet graph */
-
-.dietGraph {
-  padding: 0;
-  margin: 0;
-}
-
-.dietGraph-item {
-  display: flex;
-  align-items: center;
-}
-
-.dietGraph-item-0 {
-  color: var(--clr-primary-1);
-}
-
-.dietGraph-item-1 {
-  color: var(--clr-primary-4);
-}
-
-.dietGraph-item-2 {
-  color: var(--clr-primary-8);
-}
-
-.dietGraph-graph {
-  min-height: 1.5rem;
-  min-width: 1.5rem;
-  background-color: currentColor;
-  margin-right: 1rem;
-}
-
-.dietGraph-label {
-  font-weight: 700;
-  width: 80px;
-}
-
-.dietGraph-info {
-  color: var(--clr-primary-5);
 }
