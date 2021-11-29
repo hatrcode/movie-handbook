@@ -14,8 +14,6 @@ const MovieSearch = () => {
     e.preventDefault();
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.API_KEY}&language=en-US&query=${query}&page=1&include_adult=false`;
 
-    // const url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&sort_by=popularity.desc`;
-
     setIsLoading(true);
     try {
       const res = await fetch(url);
@@ -58,11 +56,10 @@ const MovieSearch = () => {
         </button>
       </form>
       <div className="item-list">
-        {movies
-          .filter((movie) => movie.poster_path)
-          .map((movie) => (
-            <MovieCard movie={movie} key={movie.id} />
-          ))}
+        {movies &&
+          movies
+            .filter((movie) => movie.poster_path)
+            .map((movie) => <MovieCard movie={movie} key={movie.id} />)}
       </div>
     </div>
   );
