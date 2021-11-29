@@ -15,8 +15,10 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
+    "axios": "^0.24.0",
     "gatsby": "^4.2.0",
     "gatsby-plugin-image": "^2.2.0",
     "gatsby-plugin-manifest": "^4.2.0",
