@@ -592,45 +592,34 @@ Item Card
 
 .item-list {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .item-card {
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border: 1px solid #efefef;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  padding: 5px;
+  margin: 1rem 0;
+  background-color: black;
+  position: relative;
+  color: white;
+  text-align: center;
 }
 
 .item-title {
-  text-align: center;
-  color: #000;
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
+  margin: 1rem;
+  font-size: 1rem;
+  color: white;
 }
 
 .item-img {
-  max-width: 100%;
+  max-height: 75%;
 }
 
 .item-info {
-  color: var(--clr-gray);
   font-size: 0.8rem;
-  text-align: center;
-}
-
-@media screen and (min-width: 768px) {
-  .item-list {
-    text-align: center;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    column-gap: 1rem;
-    padding: 1rem 0;
-  }
-
-  .item-img {
-    width: 170px;
-    height: auto;
-  }
 }
 
 /*
@@ -642,97 +631,4 @@ Page
 .main-page {
   min-height: calc(100vh - 5rem - 7rem);
   margin: 3rem;
-}
-
-.recipe-header {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding-bottom: 3rem;
-}
-
-.recipe-header-image {
-  max-width: 300px;
-}
-
-.recipe-header-content {
-  margin-top: 2rem;
-}
-
-@media screen and (min-width: 768px) {
-  .recipe-page {
-    margin: 4rem 3rem;
-  }
-
-  .recipe-header {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .recipe-header-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    max-width: 820px;
-    margin-top: 0;
-  }
-
-  .recipe-header-image {
-    margin-right: 3rem;
-  }
-
-  .nutrion-table {
-    padding: 1.5rem;
-  }
-
-  table td {
-    padding: 0.5rem 1.5rem;
-  }
-}
-
-.recipe-section {
-  margin-bottom: 3rem;
-}
-.nutrion-table {
-  border: 1px solid var(--clr-grey-8);
-  padding: 1rem;
-  max-height: 15rem;
-  max-width: 100%;
-  overflow: auto;
-  display: inline-block;
-}
-
-table {
-  border-collapse: collapse;
-}
-
-table tr {
-  position: relative;
-  background: var(--clr--gradient--cta) no-repeat;
-  background-size: 100% 1px;
-  background-position-y: 100%;
-}
-
-table td {
-  padding: 0.5rem 1rem;
-}
-
-.paragraph {
-  padding-bottom: 1rem;
-}
-
-.list-style li:before {
-  content: "\2022";
-  color: var(--clr-grey-5);
-  font-weight: 700;
-  line-height: 1;
-  display: inline-block;
-  margin-right: 0.5rem;
-}
-
-.gradient-text {
-  background: var(--clr--gradient--cta);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 1rem;
 }
