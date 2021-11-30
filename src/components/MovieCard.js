@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge } from "@material-ui/core";
+import Badge from "@mui/material/Badge";
 import { img_link, unavailable } from "../config/links";
 
 const MovieCard = ({ movie }) => {
