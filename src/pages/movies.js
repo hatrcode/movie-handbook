@@ -1,9 +1,9 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Genres from "../components/Genres";
 import MovieCard from "../components/MovieCard";
 import useGenre from "../hooks/useGerne";
 import Layout from "../components/layout/Layout";
+import ItemPagination from "../components/ItemPagination";
 
 const Movies = () => {
   const [genres, setGenres] = useState([]);
@@ -14,11 +14,15 @@ const Movies = () => {
   const genreforURL = useGenre(selectedGenres);
 
   const fetchMovies = async () => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`
-    );
-    setContent(data.results);
-    setNumOfPages(data.total_pages);
+    const url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`;
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      setContent(data.results);
+      setNumOfPages(data.total_pages);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -35,7 +39,6 @@ const Movies = () => {
   return (
     <Layout>
       <div className="main-page">
-        <h2>Genres</h2>
         <Genres
           type="movie"
           selectedGenres={selectedGenres}
@@ -48,6 +51,9 @@ const Movies = () => {
           {content &&
             content.map((movie) => <MovieCard movie={movie} key={movie.id} />)}
         </div>
+        {numOfPages > 1 && (
+          <ItemPagination setPage={setPage} numOfPages={numOfPages} />
+        )}
       </div>
     </Layout>
   );
