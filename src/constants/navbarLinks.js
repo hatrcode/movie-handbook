@@ -13,8 +13,13 @@ export const links = [
   },
   {
     id: 2,
-    url: "/genres",
-    text: "genres",
+    url: "/movies",
+    text: "movies",
+  },
+  {
+    id: 2,
+    url: "/series",
+    text: "series",
   },
 ];
 
