@@ -1,10 +1,11 @@
 import React from "react";
 import {
-  FaFacebook,
-  FaInstagram,
-  FaTwitter,
-  FaPinterest,
-} from "react-icons/fa";
+  FacebookIcon,
+  TwitterIcon,
+  InstagramIcon,
+  PinterestIcon,
+} from "@mui/icons-material";
+
 export const links = [
   {
     id: 1,
@@ -17,9 +18,14 @@ export const links = [
     text: "movies",
   },
   {
-    id: 2,
+    id: 3,
     url: "/series",
     text: "series",
+  },
+  {
+    id: 4,
+    url: "/trending",
+    text: "trending",
   },
 ];
 
@@ -27,21 +33,21 @@ export const social = [
   {
     id: 1,
     url: "https://www.facebook.com/expatolife",
-    icon: <FaFacebook />,
+    icon: <FacebookIcon />,
   },
   {
     id: 2,
     url: "https://www.twitter.com/expatolife",
-    icon: <FaTwitter />,
+    icon: <TwitterIcon />,
   },
   {
     id: 3,
     url: "https://www.instagram.com/expatolife",
-    icon: <FaInstagram />,
+    icon: <InstagramIcon />,
   },
   {
     id: 4,
     url: "https://www.pinterest.com/expatolife",
-    icon: <FaPinterest />,
+    icon: <PinterestIcon />,
   },
 ];
