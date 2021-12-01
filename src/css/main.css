@@ -3,7 +3,7 @@
 Fonts
 ===============
 */
-@import url("https://fonts.googleapis.com/css?family=Quicksand&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
 /*
 =============== 
@@ -600,7 +600,6 @@ Item Card
   display: flex;
   flex-direction: column;
   width: 200px;
-  padding: 5px;
   margin: 1rem 0;
   background-color: black;
   position: relative;
@@ -615,7 +614,7 @@ Item Card
 }
 
 .item-img {
-  max-height: 75%;
+  max-height: 70%;
 }
 
 .item-info {
