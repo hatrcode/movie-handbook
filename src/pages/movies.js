@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useFetch } from "../hooks/useFetch";
 import Genres from "../components/Genres";
 import MovieCard from "../components/MovieCard";
 import useGenre from "../hooks/useGerne";
@@ -9,32 +10,10 @@ const Movies = () => {
   const [genres, setGenres] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [page, setPage] = useState(1);
-  const [content, setContent] = useState([]);
-  const [numOfPages, setNumOfPages] = useState();
   const genreforURL = useGenre(selectedGenres);
 
-  const fetchMovies = async () => {
-    const url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`;
-    try {
-      const res = await fetch(url);
-      const data = await res.json();
-      setContent(data.results);
-      setNumOfPages(data.total_pages);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    window.scroll(0, 0);
-    fetchMovies();
-    // eslint-disable-next-line
-  }, [genreforURL, page]);
-
-  console.log("numpage", numOfPages);
-  console.log("gernes", selectedGenres);
-  console.log("selectedG", selectedGenres);
-  console.log("movies", content);
+  const url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`;
+  const { content, numOfPages } = useFetch(url, page, selectedGenres);
 
   return (
     <Layout>
