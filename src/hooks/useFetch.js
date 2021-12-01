@@ -1,18 +1,21 @@
 import { useState, useEffect, useCallback } from "react";
 
-export const useFetch = (url) => {
+export const useFetch = (url, page, genreforURL) => {
   const [loading, setLoading] = useState(true);
-  const [items, setItems] = useState([]);
+  const [content, setContent] = useState([]);
+  const [numOfPages, setNumOfPages] = useState();
 
   const getItems = useCallback(async () => {
     const response = await fetch(url);
-    const items = await response.json();
-    setItems(items);
+    const data = await response.json();
+    setContent(data.results);
+    setNumOfPages(data.total_pages);
     setLoading(false);
   }, [url]);
 
   useEffect(() => {
+    window.scroll(0, 0);
     getItems();
-  }, [url, getItems]);
-  return { loading, items };
+  }, [url, page, genreforURL, getItems]);
+  return { loading, content, numOfPages };
 };
