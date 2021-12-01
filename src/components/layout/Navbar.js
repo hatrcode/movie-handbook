@@ -2,22 +2,23 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "gatsby";
 import { FaBars } from "react-icons/fa";
 import { links, social } from "../../constants/navbarLinks";
+import SearchBar from "./SearchBar";
 
 const Navbar = () => {
-  const [showLinks, setShowLinks] = useState(false);
-  const linksContainerRef = useRef(null);
-  const linksRef = useRef(null);
-  const toggleLinks = () => {
-    setShowLinks(!showLinks);
-  };
-  useEffect(() => {
-    const linksHeight = linksRef.current.getBoundingClientRect().height;
-    if (showLinks) {
-      linksContainerRef.current.style.height = `${linksHeight}px`;
-    } else {
-      linksContainerRef.current.style.height = "0px";
-    }
-  }, [showLinks]);
+  // const [showLinks, setShowLinks] = useState(false);
+  // const linksContainerRef = useRef(null);
+  // const linksRef = useRef(null);
+  // const toggleLinks = () => {
+  //   setShowLinks(!showLinks);
+  // };
+  // useEffect(() => {
+  //   const linksHeight = linksRef.current.getBoundingClientRect().height;
+  //   if (showLinks) {
+  //     linksContainerRef.current.style.height = `${linksHeight}px`;
+  //   } else {
+  //     linksContainerRef.current.style.height = "0px";
+  //   }
+  // }, [showLinks]);
   return (
     <nav>
       <div className="nav-center">
@@ -25,11 +26,11 @@ const Navbar = () => {
           <div className="logo">
             <Link to="/">Movie Handbook</Link>
           </div>
-          <button className="nav-toggle" onClick={toggleLinks}>
+          {/* <button className="nav-toggle" onClick={toggleLinks}>
             <FaBars />
-          </button>
+          </button> */}
         </div>
-        <div className="links-container" ref={linksContainerRef}>
+        {/* <div className="links-container" ref={linksContainerRef}>
           <ul className="links" ref={linksRef}>
             {links.map((link) => {
               const { id, url, text } = link;
@@ -40,7 +41,8 @@ const Navbar = () => {
               );
             })}
           </ul>
-        </div>
+        </div> */}
+        <SearchBar />
         <ul className="social-icons">
           {social.map((socialIcon) => {
             const { id, url, icon } = socialIcon;
