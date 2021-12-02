@@ -2,10 +2,24 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 });
 
+const website = require("./src/config/website");
+const pathPrefix = website.pathPrefix === "/" ? "" : website.pathPrefix;
+
 module.exports = {
+  pathPrefix: website.pathPrefix,
   siteMetadata: {
-    siteUrl: "https://movie-handbook.netlify.app/",
-    title: "Movie Handbook",
+    siteUrl: website.url + pathPrefix,
+    pathPrefix,
+    title: website.title,
+    titleAlt: website.titleAlt,
+    description: website.description,
+    banner: website.banner,
+    headline: website.headline,
+    siteLanguage: website.siteLanguage,
+    ogLanguage: website.ogLanguage,
+    author: website.author,
+    twitter: website.twitter,
+    facebook: website.facebook,
   },
   plugins: [
     "gatsby-plugin-image",
