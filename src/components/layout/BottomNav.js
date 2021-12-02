@@ -17,7 +17,7 @@ const BottomNav = () => {
         label="Trending"
         icon={<Whatshot />}
         component={Link}
-        to="/"
+        to="/trending"
       />
       <BottomNavigationAction
         label="Movies"
@@ -35,7 +35,7 @@ const BottomNav = () => {
         label="Search"
         icon={<Search />}
         component={Link}
-        to="/"
+        to="/search"
       />
     </BottomNavigation>
   );
