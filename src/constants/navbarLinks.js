@@ -1,10 +1,8 @@
 import React from "react";
-import {
-  FacebookIcon,
-  TwitterIcon,
-  InstagramIcon,
-  PinterestIcon,
-} from "@mui/icons-material";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import PinterestIcon from "@mui/icons-material/Pinterest";
 
 export const links = [
   {
@@ -49,5 +47,41 @@ export const social = [
     id: 4,
     url: "https://www.pinterest.com/expatolife",
     icon: <PinterestIcon />,
+  },
+];
+
+export const movies = [
+  {
+    id: 2.1,
+    text: "Movies 2021",
+    url: "/movies?year=2021",
+  },
+  {
+    id: 2.2,
+    text: "Movies 2020",
+    url: "/movies?year=2020",
+  },
+  {
+    id: 2.3,
+    text: "Movies 2019",
+    url: "/movies?year=2019",
+  },
+];
+
+export const series = [
+  {
+    id: 2.1,
+    text: "Series 2021",
+    url: "/series?year=2021",
+  },
+  {
+    id: 2.2,
+    text: "Series 2020",
+    url: "/series?year=2020",
+  },
+  {
+    id: 2.3,
+    text: "Series 2019",
+    url: "/series?year=2019",
   },
 ];
