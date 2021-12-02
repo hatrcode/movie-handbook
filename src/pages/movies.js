@@ -4,19 +4,22 @@ import Genres from "../components/Genres";
 import MovieCard from "../components/MovieCard";
 import useGenre from "../hooks/useGerne";
 import Layout from "../components/layout/Layout";
+import Seo from "../components/layout/SEO";
 import ItemPagination from "../components/ItemPagination";
 
-const Movies = () => {
+const Movies = ({ location }) => {
+  const params = new URLSearchParams(location.search);
+  const year = params.get("year");
   const [genres, setGenres] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [page, setPage] = useState(1);
   const genreforURL = useGenre(selectedGenres);
-
-  const url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`;
+  const url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}&primary_release_year=${year}`;
   const { content, numOfPages } = useFetch(url, page, selectedGenres);
 
   return (
     <Layout>
+      <Seo title="Movie Handbook" />
       <div className="main-page">
         <Genres
           type="movie"
