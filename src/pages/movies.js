@@ -15,7 +15,7 @@ const Movies = ({ location }) => {
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [page, setPage] = useState(1);
   const genreforURL = useGenre(selectedGenres);
-  const url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}&primary_release_year=${year}`;
+  const url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.GATSBY_TMDB_API}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}&primary_release_year=${year}`;
   const { content, numOfPages } = useFetch(url, page, selectedGenres);
 
   return (
