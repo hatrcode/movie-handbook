@@ -13,7 +13,7 @@ const muiTheme = createTheme({
     secondary: pink,
   },
   typography: {
-    fontFamily: "Quicksand",
+    fontFamily: `"Quicksand", sans-serif`,
   },
 });
 
