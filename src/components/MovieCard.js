@@ -83,12 +83,12 @@ const MovieCard = ({ movie }) => {
                   </Button>
                 </Typography>
                 <Typography variant="body2">{text}.</Typography>
-                <Button
+                {/* <Button
                   size="small"
                   variant="contained"
                   sx={{ backgroundColor: "black", color: "white", mt: 1 }}>
                   Learn More
-                </Button>
+                </Button> */}
               </CardContent>
             </Card>
           </Popover>
