@@ -4,6 +4,7 @@ import Genres from "../components/Genres";
 import MovieCard from "../components/MovieCard";
 import useGenre from "../hooks/useGerne";
 import Layout from "../components/layout/Layout";
+import Seo from "../components/layout/SEO";
 import ItemPagination from "../components/ItemPagination";
 import { Typography } from "@mui/material";
 
@@ -20,6 +21,7 @@ const Series = ({ location }) => {
 
   return (
     <Layout>
+      <Seo title="Series" />
       <div className="main-page">
         <Typography variant="h3" component="h2" gutterBottom align="center">
           TV Series

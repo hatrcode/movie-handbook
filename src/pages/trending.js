@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useFetch } from "../hooks/useFetch";
 import MovieCard from "../components/MovieCard";
 import Layout from "../components/layout/Layout";
+import Seo from "../components/layout/SEO";
 import ItemPagination from "../components/ItemPagination";
 import { Typography } from "@mui/material";
 
@@ -15,8 +16,18 @@ const Trending = ({ location }) => {
 
   const { content, numOfPages } = useFetch(url, page);
 
+  let type = "";
+
+  if (media_type === "movie") {
+    type = "movies";
+  } else if (media_type === "tv") {
+    type = "series";
+  } else {
+    type = "";
+  }
   return (
     <Layout>
+      <Seo title="Trending" />
       <div className="main-page">
         <Typography variant="h3" component="h2" gutterBottom align="center">
           Trending {media_type === "all" ? "" : media_type} this {time}

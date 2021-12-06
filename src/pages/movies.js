@@ -20,7 +20,7 @@ const Movies = ({ location }) => {
 
   return (
     <Layout>
-      <Seo title="Movie Handbook" />
+      <Seo title="Movies" />
       <div className="main-page">
         <Typography variant="h3" component="h2" gutterBottom align="center">
           Movies
