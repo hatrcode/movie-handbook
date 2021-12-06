@@ -6,6 +6,7 @@ import useGenre from "../hooks/useGerne";
 import Layout from "../components/layout/Layout";
 import Seo from "../components/layout/SEO";
 import ItemPagination from "../components/ItemPagination";
+import { Typography } from "@mui/material";
 
 const Movies = ({ location }) => {
   const params = new URLSearchParams(location.search);
@@ -21,6 +22,9 @@ const Movies = ({ location }) => {
     <Layout>
       <Seo title="Movie Handbook" />
       <div className="main-page">
+        <Typography variant="h3" component="h2" gutterBottom align="center">
+          Movies
+        </Typography>
         <Genres
           type="movie"
           selectedGenres={selectedGenres}

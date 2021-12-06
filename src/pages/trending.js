@@ -3,6 +3,7 @@ import { useFetch } from "../hooks/useFetch";
 import MovieCard from "../components/MovieCard";
 import Layout from "../components/layout/Layout";
 import ItemPagination from "../components/ItemPagination";
+import { Typography } from "@mui/material";
 
 const Trending = ({ location }) => {
   const [page, setPage] = useState(1);
@@ -17,6 +18,9 @@ const Trending = ({ location }) => {
   return (
     <Layout>
       <div className="main-page">
+        <Typography variant="h3" component="h2" gutterBottom align="center">
+          Trending {media_type === "all" ? "" : media_type} this {time}
+        </Typography>
         <div className="item-list">
           {content &&
             content.map((movie) => <MovieCard movie={movie} key={movie.id} />)}
