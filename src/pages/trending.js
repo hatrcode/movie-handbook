@@ -11,7 +11,7 @@ const Trending = ({ location }) => {
   const media_type = params.get("media_type") || "all";
   const time = params.get("time") || "week";
 
-  const url = `https://api.themoviedb.org/3/trending/${media_type}/${time}?api_key=${process.env.TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`;
+  const url = `https://api.themoviedb.org/3/trending/${media_type}/${time}?api_key=${process.env.REACT_APP_TMDB}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`;
 
   const { content, numOfPages } = useFetch(url, page);
 
