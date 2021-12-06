@@ -26,7 +26,9 @@ const Navbar = () => {
           <div className="logo">
             <Link to="/">Movie Handbook</Link>
           </div>
-          <Box component="div" sx={{ display: { md: "none" } }}>
+          <Box
+            component="div"
+            sx={{ display: { xs: "block", sm: "none", md: "none" } }}>
             <Link to="/search">
               <SearchIcon />
             </Link>
@@ -37,14 +39,15 @@ const Navbar = () => {
           <SubNavDrop main="Series" url="/series" sub={series} />
           <SubNavDrop main="Trending" url="/trending" sub={trending} />
         </Box>
-        <Box component="div" sx={{ display: { xs: "none", md: "block" } }}>
-          <SearchBar />
-        </Box>
-
         <Box component="div" sx={{ display: { xs: "block" } }}>
           <Drawer open={mobileOpen} onClose={() => setMobileOpen(!mobileOpen)}>
             <MobileMenu />
           </Drawer>
+        </Box>
+        <Box
+          component="div"
+          sx={{ display: { xs: "none", sm: "block", md: "block" } }}>
+          <SearchBar />
         </Box>
       </div>
     </nav>
