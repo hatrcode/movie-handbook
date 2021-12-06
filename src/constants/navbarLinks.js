@@ -85,3 +85,16 @@ export const series = [
     url: "/series?year=2019",
   },
 ];
+
+export const trending = [
+  {
+    id: 3.1,
+    text: "Movie this week",
+    url: "/trending?media_type=movie",
+  },
+  {
+    id: 3.2,
+    text: "Series this week",
+    url: "/trending?media_type=tv",
+  },
+];
