@@ -32,7 +32,7 @@ const MovieCard = ({ movie }) => {
   const cardTitle = `${defaultTitle} (${year})`;
   const text = overview.split(".")[0];
   return (
-    <div className="item-card" key={id}>
+    <div key={id}>
       <ImageListItem
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}>
