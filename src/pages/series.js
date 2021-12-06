@@ -5,6 +5,7 @@ import MovieCard from "../components/MovieCard";
 import useGenre from "../hooks/useGerne";
 import Layout from "../components/layout/Layout";
 import ItemPagination from "../components/ItemPagination";
+import { Typography } from "@mui/material";
 
 const Series = ({ location }) => {
   const params = new URLSearchParams(location.search);
@@ -20,6 +21,9 @@ const Series = ({ location }) => {
   return (
     <Layout>
       <div className="main-page">
+        <Typography variant="h3" component="h2" gutterBottom align="center">
+          TV Series
+        </Typography>
         <Genres
           type="tv"
           selectedGenres={selectedGenres}
