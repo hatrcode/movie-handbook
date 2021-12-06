@@ -32,7 +32,11 @@ const Trending = ({ location }) => {
         <Typography variant="h3" component="h2" gutterBottom align="center">
           Trending {media_type === "all" ? "" : media_type} this {time}
         </Typography>
-        {loading && <h2>Loading...</h2>}
+        {loading && (
+          <Typography variant="h3" gutterBottom align="center">
+            Loading...
+          </Typography>
+        )}
         <div className="item-list">
           {content &&
             content.map((movie) => <MovieCard movie={movie} key={movie.id} />)}

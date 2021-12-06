@@ -34,7 +34,11 @@ const Series = ({ location }) => {
           setGenres={setGenres}
           setPage={setPage}
         />
-        {loading && <h2>Loading...</h2>}
+        {loading && (
+          <Typography variant="h3" gutterBottom align="center">
+            Loading...
+          </Typography>
+        )}
         <div className="item-list">
           {content &&
             content.map((movie) => <MovieCard movie={movie} key={movie.id} />)}
