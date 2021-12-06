@@ -6,7 +6,7 @@ import useGenre from "../hooks/useGerne";
 import Layout from "../components/layout/Layout";
 import ItemPagination from "../components/ItemPagination";
 
-const Series = () => {
+const Series = ({ location }) => {
   const params = new URLSearchParams(location.search);
   const year = params.get("year");
   const [genres, setGenres] = useState([]);
