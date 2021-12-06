@@ -176,6 +176,7 @@ p {
 }
 
 /*  global classes */
+
 /* section */
 .section {
   padding: 5rem 0;
@@ -233,6 +234,7 @@ nav {
   background: var(--clr-white);
   box-shadow: var(--light-shadow);
 }
+
 .nav-header {
   display: flex;
   align-items: center;
@@ -474,4 +476,17 @@ Page
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+/*
+=============== 
+Items
+===============
+*/
+
+.item-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 2rem 0;
 }
