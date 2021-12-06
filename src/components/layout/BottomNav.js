@@ -14,10 +14,10 @@ const BottomNav = () => {
         setValue(newValue);
       }}>
       <BottomNavigationAction
-        label="Trending"
-        icon={<Whatshot />}
+        label="Search"
+        icon={<Search />}
         component={Link}
-        to="/trending"
+        to="/search"
       />
       <BottomNavigationAction
         label="Movies"
@@ -32,10 +32,10 @@ const BottomNav = () => {
         to="/series"
       />
       <BottomNavigationAction
-        label="Search"
-        icon={<Search />}
+        label="Trending"
+        icon={<Whatshot />}
         component={Link}
-        to="/search"
+        to="/trending"
       />
     </BottomNavigation>
   );
