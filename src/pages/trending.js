@@ -30,7 +30,7 @@ const Trending = ({ location }) => {
       <Seo title="Trending" />
       <div className="main-page">
         <Typography variant="h3" component="h2" gutterBottom align="center">
-          Trending {media_type === "all" ? "" : media_type} this {time}
+          Trending {type} this {time}
         </Typography>
         {loading && (
           <Typography variant="h3" gutterBottom align="center">
