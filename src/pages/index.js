@@ -9,7 +9,7 @@ const IndexPage = () => {
     <Layout>
       <Seo title="Movie Handbook" />
       <div className="main-page">
-        <Typography variant="h3" component="h2" gutterBottom>
+        <Typography variant="h3" component="h2" gutterBottom align="center">
           Movie Handbook
         </Typography>
         <Typography variant="subtitle1" gutterBottom>
