@@ -16,7 +16,7 @@ const Movies = ({ location }) => {
   const [page, setPage] = useState(1);
   const genreforURL = useGenre(selectedGenres);
   const url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.GATSBY_TMDB_API}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}&primary_release_year=${year}`;
-  const { content, numOfPages } = useFetch(url, page, selectedGenres);
+  const { content, numOfPages, loading } = useFetch(url, page, selectedGenres);
 
   return (
     <Layout>
@@ -33,6 +33,7 @@ const Movies = ({ location }) => {
           setGenres={setGenres}
           setPage={setPage}
         />
+        {loading && <h2>Loading...</h2>}
         <div className="item-list">
           {content &&
             content.map((movie) => <MovieCard movie={movie} key={movie.id} />)}

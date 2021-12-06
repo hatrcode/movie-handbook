@@ -14,7 +14,7 @@ const Trending = ({ location }) => {
 
   const url = `https://api.themoviedb.org/3/trending/${media_type}/${time}?api_key=${process.env.GATSBY_TMDB_API}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`;
 
-  const { content, numOfPages } = useFetch(url, page);
+  const { content, numOfPages, loading } = useFetch(url, page);
 
   let type = "";
 
@@ -32,6 +32,7 @@ const Trending = ({ location }) => {
         <Typography variant="h3" component="h2" gutterBottom align="center">
           Trending {media_type === "all" ? "" : media_type} this {time}
         </Typography>
+        {loading && <h2>Loading...</h2>}
         <div className="item-list">
           {content &&
             content.map((movie) => <MovieCard movie={movie} key={movie.id} />)}
