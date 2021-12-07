@@ -11,8 +11,16 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 
 const MovieCard = ({ movie }) => {
-  const { id, title, name, poster_path, overview, vote_average, release_date } =
-    movie;
+  const {
+    id,
+    title,
+    name,
+    poster_path,
+    overview,
+    vote_average,
+    release_date,
+    first_air_date,
+  } = movie;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -26,7 +34,7 @@ const MovieCard = ({ movie }) => {
 
   const open = Boolean(anchorEl);
 
-  const year = new Date(release_date).getFullYear();
+  const year = new Date(release_date || first_air_date).getFullYear();
 
   const defaultTitle = title || name;
   const cardTitle = `${defaultTitle} (${year})`;
@@ -47,7 +55,7 @@ const MovieCard = ({ movie }) => {
           actionIcon={
             <IconButton
               sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-              aria-label={`info about ${title}`}>
+              aria-label={`info about ${title || name} `}>
               <InfoIcon />
             </IconButton>
           }
