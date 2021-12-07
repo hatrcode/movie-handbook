@@ -34,7 +34,7 @@ const Movies = ({ location }) => {
           setPage={setPage}
         />
         {loading && (
-          <Typography variant="h3" gutterBottom align="center">
+          <Typography variant="h4" gutterBottom align="center">
             Loading...
           </Typography>
         )}

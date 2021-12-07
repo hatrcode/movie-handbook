@@ -44,7 +44,11 @@ const SearchPage = ({ location }) => {
         {query && (
           <div>
             <Typography variant="h2">Search results</Typography>
-            {loading && <div>Searching...</div>}
+            {loading && (
+              <Typography variant="h4" gutterBottom align="center">
+                Searching...
+              </Typography>
+            )}
             {content.length === 0 && !loading && (
               <div className="error-container">
                 <p>Sorry. We couldn’t find what you were looking for.</p>
