@@ -41,7 +41,7 @@ const SubMenu = () => {
           <ListItemIcon>
             <Movie />
           </ListItemIcon>
-          <Link to="/movie">
+          <Link to="/movies">
             <ListItemText primary="Movie" />
           </Link>
           {open1 ? <ExpandLess /> : <ExpandMore />}
