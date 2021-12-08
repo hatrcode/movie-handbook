@@ -85,7 +85,6 @@ body {
   background: var(--clr-white);
   color: var(--clr-gray);
   line-height: 1.5;
-  font-size: 0.85rem;
   border-color: #e5e5e5;
   letter-spacing: var(--spacing);
 }
@@ -471,11 +470,19 @@ Page
 
 .main-page {
   min-height: calc(100vh - 20rem);
-  margin: 3rem;
+  margin: 2rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .main-page {
+    min-height: calc(100vh - 20rem);
+    margin: 3rem 2rem;
+  }
 }
 
 /*
@@ -487,6 +494,37 @@ Items
 .item-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  margin: 2rem 0;
+  justify-content: space-evenly;
+  column-gap: 0.75rem;
+}
+
+.is-fading:after {
+  content: "";
+  width: 60px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    #fff 100%
+  );
+  pointer-events: none;
+  transition: linear 0.3s;
+  opacity: 1;
+}
+
+.scroller-wrap {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.scroller {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  padding-bottom: 1rem;
 }
