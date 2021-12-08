@@ -1,5 +1,5 @@
 import React from "react";
-import { img_link, unavailable } from "../config/links";
+import { img_300, unavailable } from "../constants/links";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import IconButton from "@mui/material/IconButton";
@@ -9,10 +9,10 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
+import { Box } from "@mui/system";
 
 const MovieCard = ({ movie }) => {
   const {
-    id,
     title,
     name,
     poster_path,
@@ -40,12 +40,12 @@ const MovieCard = ({ movie }) => {
   const cardTitle = `${defaultTitle} (${year})`;
   const text = overview.split(".")[0];
   return (
-    <div key={id}>
+    <Box container sx={{ width: { xs: 150, sm: 185 } }}>
       <ImageListItem
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}>
         <img
-          src={poster_path ? `${img_link}${poster_path}` : unavailable}
+          src={poster_path ? `${img_300}${poster_path}` : unavailable}
           alt={title}
           loading="lazy"
         />
@@ -102,7 +102,7 @@ const MovieCard = ({ movie }) => {
           </Popover>
         </div>
       </ImageListItem>
-    </div>
+    </Box>
   );
 };
 
