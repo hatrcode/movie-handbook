@@ -528,3 +528,17 @@ Items
   overflow-y: hidden;
   padding-bottom: 1rem;
 }
+
+.movie-info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  padding: 0.5rem;
+  line-height: 1rem;
+  color: white;
+  font-size: 0.75rem;
+  text-align: center;
+}
