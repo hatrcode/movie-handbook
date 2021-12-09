@@ -10,8 +10,8 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import PeopleCard from "../components/PeopleCard";
 import MovieCard from "../components/MovieCard";
 
-const MovieTemplate = ({ media_type, media_id }) => {
-  const url = `https://api.themoviedb.org/3/${media_type}/${media_id}?api_key=${process.env.GATSBY_TMDB_API}&language=en-US&append_to_response=external_ids,keywords,credits,videos,similar`;
+const MovieTemplate = ({ id }) => {
+  const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.GATSBY_TMDB_API}&language=en-US&append_to_response=external_ids,keywords,credits,videos,similar`;
   const { content, loading } = useFetch(url);
 
   const {
@@ -73,8 +73,8 @@ const MovieTemplate = ({ media_type, media_id }) => {
 
   const directorList = credits.crew.filter(
     (director) =>
-      director.job == "Executive Producer" &&
-      director.known_for_department == "Directing"
+      director.job === "Executive Producer" &&
+      director.known_for_department === "Directing"
   );
 
   const genreList = genres.map((gen) => {
@@ -170,26 +170,31 @@ const MovieTemplate = ({ media_type, media_id }) => {
                         </p>
                       )}
                     </div>
-                    <Button
-                      variant="contained"
-                      startIcon={<YouTubeIcon />}
-                      color="primary"
-                      onClick={handleOpen}
-                      sx={{ mt: 1 }}>
-                      Trailer
-                    </Button>
-                    <Modal
-                      open={open}
-                      onClick={handleClose}
-                      aria-labelledby="modal-modal-title"
-                      aria-describedby="modal-modal-description">
-                      <Box sx={style} onClick={handleClose}>
-                        <iframe
-                          width="85%"
-                          height="85%"
-                          src={`https://www.youtube.com/embed/${videos.results[0].key}?autoplay=1&mute=1`}></iframe>
-                      </Box>
-                    </Modal>
+                    {videos && (
+                      <div>
+                        <Button
+                          variant="contained"
+                          startIcon={<YouTubeIcon />}
+                          color="primary"
+                          onClick={handleOpen}
+                          sx={{ mt: 1 }}>
+                          Trailer
+                        </Button>
+                        <Modal
+                          open={open}
+                          onClick={handleClose}
+                          aria-labelledby="modal-modal-title"
+                          aria-describedby="modal-modal-description">
+                          <Box sx={style} onClick={handleClose}>
+                            <iframe
+                              title={cardTitle}
+                              width="85%"
+                              height="85%"
+                              src={`https://www.youtube.com/embed/${videos.results[0].key}?autoplay=1&mute=1`}></iframe>
+                          </Box>
+                        </Modal>
+                      </div>
+                    )}
                   </Box>
                 </Grid>
               </Grid>
