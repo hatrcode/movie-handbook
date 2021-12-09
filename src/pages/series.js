@@ -41,7 +41,9 @@ const Series = ({ location }) => {
         )}
         <div className="item-list">
           {content &&
-            content.map((movie) => <MovieCard movie={movie} key={movie.id} />)}
+            content.map((movie) => (
+              <MovieCard movie={movie} key={movie.id} media_type="tv" />
+            ))}
         </div>
         {numOfPages > 1 && (
           <ItemPagination setPage={setPage} numOfPages={numOfPages} />
