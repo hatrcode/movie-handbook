@@ -54,14 +54,6 @@ const MovieTemplate = ({ id }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  let type = "";
-
-  if (media_type === "movie") {
-    type = "movies";
-  } else {
-    type = "series";
-  }
-
   const year = new Date(release_date || first_air_date).getFullYear();
 
   const defaultTitle = title || name;
@@ -278,11 +270,11 @@ const MovieTemplate = ({ id }) => {
                   display: "flex",
                   justifyContent: "center",
                 }}>
-                <Link to={`/${type}`}>
+                <Link to="/movies">
                   <Button
                     variant="contained"
                     sx={{ backgroundColor: "black", color: "white", mt: 2 }}>
-                    All {type}
+                    All movies
                   </Button>
                 </Link>
               </Box>
