@@ -44,7 +44,7 @@ const Shows = () => {
                 container
                 key={movie.id}
                 sx={{ maxWidth: { xs: 150, md: 175 } }}>
-                <MovieCard movie={movie} media_type="tv" />
+                <MovieCard movie={movie} />
               </Box>
             ))}
         </div>
