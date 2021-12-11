@@ -15,7 +15,7 @@ const MovieTrial = ({ params }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  //   const siteUrl = location.href ? location.href : "";
+  //   const siteUrl = location.href ? location.href : null;
   //   const itemID = siteUrl.substring(siteUrl.lastIndexOf("/") + 1);
 
   const url = `https://api.themoviedb.org/3/movie/${params.id}?api_key=${process.env.GATSBY_TMDB_API}&append_to_response=external_ids,keywords,credits,videos,similar`;
@@ -30,6 +30,7 @@ const MovieTrial = ({ params }) => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line
   }, [url]);
 
   console.log("content", content);
@@ -59,8 +60,6 @@ const MovieTrial = ({ params }) => {
       release_date,
       production_companies,
       runtime,
-      number_of_seasons,
-      number_of_episodes,
       keywords,
       credits,
       videos,
@@ -77,15 +76,19 @@ const MovieTrial = ({ params }) => {
             director.job === "Executive Producer" &&
             director.known_for_department === "Directing"
         )
-      : "";
+      : null;
 
     const genreList = genres
       ? genres.map((gen) => {
           return gen.name;
         })
-      : "";
+      : null;
 
-    const peopleList = credits ? credits.cast.slice(0, 8) : "";
+    const peopleList = credits ? credits.cast.slice(0, 8) : null;
+
+    const videoList = videos.results.filter(
+      (video) => video.type === "Trailer"
+    );
 
     return (
       <Layout>
@@ -136,48 +139,38 @@ const MovieTrial = ({ params }) => {
                         gutterBottom>
                         {tagline}
                       </Typography>
-                    ) : (
-                      ""
-                    )}
-                    {overview ? <p>{overview}</p> : ""}
+                    ) : null}
+                    {overview ? <p>{overview}</p> : null}
                     <div>
                       {year ? (
                         <p>
                           <strong>Released</strong>: {year}
                         </p>
-                      ) : (
-                        ""
-                      )}
+                      ) : null}
                       {runtime ? (
                         <p>
                           <strong>Duration</strong>: {Math.floor(runtime / 60)}h{" "}
                           {runtime % 60}m
                         </p>
-                      ) : (
-                        ""
-                      )}
+                      ) : null}
                     </div>
                     <div>
-                      {directorList ? (
+                      {directorList.lenght > 0 ? (
                         <p>
                           <strong>Director</strong>:{" "}
                           {directorList.map((dr) => (
                             <span key={dr.id}>{dr.name}</span>
                           ))}
                         </p>
-                      ) : (
-                        ""
-                      )}
-                      {genreList ? (
+                      ) : null}
+                      {genreList.lenght > 0 ? (
                         <p>
                           <strong>Genre</strong>:{" "}
                           <span>{genreList.join(", ")}</span>
                         </p>
-                      ) : (
-                        ""
-                      )}
+                      ) : null}
                     </div>
-                    {videos ? (
+                    {videoList.lenght > 0 ? (
                       <div>
                         <Button
                           variant="contained"
@@ -213,9 +206,7 @@ const MovieTrial = ({ params }) => {
                           </Box>
                         </Modal>
                       </div>
-                    ) : (
-                      ""
-                    )}
+                    ) : null}
                   </Box>
                 </Grid>
               </Grid>
@@ -241,31 +232,23 @@ const MovieTrial = ({ params }) => {
                     </div>
                   </div>
                 </Grid>
-              ) : (
-                ""
-              )}
+              ) : null}
               <Grid item xs={12} sm={4}>
                 {status ? (
                   <p>
                     <strong>Status</strong>: {status}
                   </p>
-                ) : (
-                  ""
-                )}
+                ) : null}
                 {budget ? (
                   <p>
                     <strong>Budget</strong>: ${budget.toLocaleString("en-US")}
                   </p>
-                ) : (
-                  ""
-                )}
+                ) : null}
                 {revenue ? (
                   <p>
                     <strong>Revenue</strong>: ${revenue.toLocaleString("en-US")}
                   </p>
-                ) : (
-                  ""
-                )}
+                ) : null}
                 {production_companies ? (
                   <div>
                     <p>
@@ -275,9 +258,7 @@ const MovieTrial = ({ params }) => {
                       <li key={pc.id}>{pc.name}</li>
                     ))}
                   </div>
-                ) : (
-                  ""
-                )}
+                ) : null}
                 {keywords ? (
                   <div
                     style={{
@@ -292,9 +273,7 @@ const MovieTrial = ({ params }) => {
                       </Button>
                     ))}
                   </div>
-                ) : (
-                  ""
-                )}
+                ) : null}
               </Grid>
             </Grid>
             {similar ? (
@@ -306,7 +285,12 @@ const MovieTrial = ({ params }) => {
                 <div className="scroller-wrap is-fading">
                   <div className="scroller">
                     {similar.results.slice(0, 9).map((movie) => (
-                      <MovieCard movie={movie} key={movie.id} />
+                      <Box
+                        container
+                        key={movie.id}
+                        sx={{ minWidth: { xs: 100, sm: 150, md: 175 } }}>
+                        <MovieCard movie={movie} />
+                      </Box>
                     ))}
                   </div>
                 </div>
@@ -324,9 +308,7 @@ const MovieTrial = ({ params }) => {
                   </Link>
                 </Box>
               </div>
-            ) : (
-              ""
-            )}
+            ) : null}
           </Box>
         </div>
       </Layout>

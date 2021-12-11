@@ -7,6 +7,7 @@ import { Typography, Button, Grid, Box, Modal, Container } from "@mui/material";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import PeopleCard from "../../components/PeopleCard";
 import MovieCard from "../../components/MovieCard";
+import { dateConvert } from "../../config/dateConvert";
 
 const TvTemplate = ({ params }) => {
   const [content, setContent] = useState([]);
@@ -29,7 +30,8 @@ const TvTemplate = ({ params }) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+    // eslint-disable-next-line
+  }, [url]);
 
   // Show loading before finish fetching data, or normal page after finished.
   if (loading) {
@@ -79,6 +81,8 @@ const TvTemplate = ({ params }) => {
       similar,
     } = content;
 
+    console.log(content);
+
     const year = new Date(first_air_date).getFullYear();
 
     const cardTitle = `${name} (${year})`;
@@ -87,21 +91,25 @@ const TvTemplate = ({ params }) => {
       ? created_by.map((creator) => {
           return creator.name;
         })
-      : "";
+      : null;
 
     const genreList = genres
       ? genres.map((gen) => {
           return gen.name;
         })
-      : "";
+      : null;
 
     const networkList = networks
       ? networks.map((n) => {
           return n.name;
         })
-      : "";
+      : null;
 
-    const peopleList = credits ? credits.cast.slice(0, 8) : "";
+    const peopleList = credits ? credits.cast.slice(0, 8) : null;
+
+    const videoList = videos.results.filter(
+      (video) => video.type === "Trailer"
+    );
 
     return (
       <Layout>
@@ -163,20 +171,20 @@ const TvTemplate = ({ params }) => {
                     ) : null}
                     {overview ? <p>{overview}</p> : null}
                     <div>
-                      {creatorList ? (
+                      {creatorList.lenght > 0 ? (
                         <p>
                           <strong>Creator</strong>:{" "}
                           <span>{creatorList.join(", ")}</span>
                         </p>
                       ) : null}
-                      {genreList ? (
+                      {genreList.lenght > 0 ? (
                         <p>
                           <strong>Genre</strong>:{" "}
                           <span>{genreList.join(", ")}</span>
                         </p>
                       ) : null}
                     </div>
-                    {videos ? (
+                    {videoList.lenght > 0 ? (
                       <div>
                         <Button
                           variant="contained"
@@ -196,7 +204,7 @@ const TvTemplate = ({ params }) => {
                               title={cardTitle}
                               width="85%"
                               height="85%"
-                              src={`https://www.youtube.com/embed/${videos.results[0].key}?autoplay=1&mute=1`}></iframe>
+                              src={`https://www.youtube.com/embed/${videoList[0].key}?autoplay=1&mute=1`}></iframe>
                           </Box>
                         </Modal>
                       </div>
@@ -216,7 +224,7 @@ const TvTemplate = ({ params }) => {
               {/* Cast section */}
               <Grid item xs={12} sm={8}>
                 <Typography variant="h5" component="h2" gutterBottom>
-                  Series Cast
+                  Show Cast
                 </Typography>
                 {peopleList ? (
                   <div className="scroller-wrap is-fading">
@@ -323,7 +331,7 @@ const TvTemplate = ({ params }) => {
                         container
                         key={movie.id}
                         sx={{ minWidth: { xs: 100, sm: 150, md: 175 } }}>
-                        <MovieCard movie={movie} media_type="tv" />
+                        <MovieCard movie={movie} />
                       </Box>
                     ))}
                   </div>
@@ -333,11 +341,11 @@ const TvTemplate = ({ params }) => {
                     display: "flex",
                     justifyContent: "center",
                   }}>
-                  <Link to="/movies">
+                  <Link to="/shows">
                     <Button
                       variant="contained"
                       sx={{ backgroundColor: "black", color: "white", mt: 2 }}>
-                      All movies
+                      All TV shows
                     </Button>
                   </Link>
                 </Box>
