@@ -33,15 +33,15 @@ const SearchPage = ({ location }) => {
     <Layout>
       <Seo title="Search" />
       <div className="main-page">
-        {!query && (
+        {!query ? (
           <div>
             <Typography variant="h2">Search</Typography>
             <div style={{ marginTop: "1rem" }}>
               <SearchBar />
             </div>
           </div>
-        )}
-        {query && (
+        ) : null}
+        {query ? (
           <div>
             <Typography variant="h2" align="center" gutterBottom>
               Search results
@@ -74,7 +74,7 @@ const SearchPage = ({ location }) => {
               </div>
             )}
           </div>
-        )}
+        ) : null}
       </div>
     </Layout>
   );
