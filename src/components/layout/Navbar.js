@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "gatsby";
 import SearchBar from "../SearchBar";
 import SubNavDrop from "../layout/SubNavDrop";
-import { movies, series, trending } from "../../constants/navbarLinks";
+import { movies, shows, trending } from "../../constants/navbarLinks";
 import { Drawer, Box, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -36,7 +36,7 @@ const Navbar = () => {
         </div>
         <Box component="div" sx={{ display: { xs: "none", md: "block" } }}>
           <SubNavDrop main="Movies" url="/movies" sub={movies} />
-          <SubNavDrop main="Series" url="/series" sub={series} />
+          <SubNavDrop main="Tv Shows" url="/shows" sub={shows} />
           <SubNavDrop main="Trending" url="/trending" sub={trending} />
         </Box>
         <Box component="div" sx={{ display: { xs: "block" } }}>
