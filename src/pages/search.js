@@ -61,9 +61,9 @@ const SearchPage = ({ location }) => {
                 </Link>
               </div>
             )}
-            <div className="item-list">
-              {content &&
-                content.map((movie) => (
+            {content && (
+              <div className="item-list">
+                {content.map((movie) => (
                   <Box
                     container
                     key={movie.id}
@@ -71,7 +71,8 @@ const SearchPage = ({ location }) => {
                     <MovieCard movie={movie} />
                   </Box>
                 ))}
-            </div>
+              </div>
+            )}
           </div>
         )}
       </div>
