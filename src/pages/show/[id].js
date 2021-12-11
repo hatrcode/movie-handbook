@@ -171,20 +171,20 @@ const TvTemplate = ({ params }) => {
                     ) : null}
                     {overview ? <p>{overview}</p> : null}
                     <div>
-                      {creatorList.lenght > 0 ? (
+                      {creatorList.length > 0 ? (
                         <p>
                           <strong>Creator</strong>:{" "}
                           <span>{creatorList.join(", ")}</span>
                         </p>
                       ) : null}
-                      {genreList.lenght > 0 ? (
+                      {genreList.length > 0 ? (
                         <p>
                           <strong>Genre</strong>:{" "}
                           <span>{genreList.join(", ")}</span>
                         </p>
                       ) : null}
                     </div>
-                    {videoList.lenght > 0 ? (
+                    {videoList.length > 0 ? (
                       <div>
                         <Button
                           variant="contained"
