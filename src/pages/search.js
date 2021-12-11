@@ -13,7 +13,7 @@ const SearchPage = ({ location }) => {
   const [loading, setLoading] = useState(true);
 
   const handleSubmit = async () => {
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.GATSBY_TMDB_API}&language=en-US&query=${query}&page=1&include_adult=false`;
+    const url = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.GATSBY_TMDB_API}&language=en-US&query=${query}&page=1&include_adult=false`;
     try {
       const res = await fetch(url);
       const data = await res.json();
@@ -60,7 +60,12 @@ const SearchPage = ({ location }) => {
             <div className="item-list">
               {content &&
                 content.map((movie) => (
-                  <MovieCard movie={movie} key={movie.id} />
+                  <Box
+                    container
+                    key={movie.id}
+                    sx={{ maxWidth: { xs: 150, md: 175 } }}>
+                    <MovieCard movie={movie} />
+                  </Box>
                 ))}
             </div>
           </div>
