@@ -4,7 +4,7 @@ import Layout from "../components/layout/Layout";
 import Seo from "../components/layout/SEO";
 import MovieCard from "../components/MovieCard";
 import SearchBar from "../components/SearchBar";
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 
 const SearchPage = ({ location }) => {
   const params = new URLSearchParams(location.search);
