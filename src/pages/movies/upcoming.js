@@ -36,9 +36,9 @@ const UpcomingMovies = () => {
             Loading...
           </Typography>
         )}
-        <div className="item-list">
-          {content &&
-            content.map((movie) => (
+        {content && (
+          <div className="item-list">
+            {content.map((movie) => (
               <Box
                 container
                 key={movie.id}
@@ -46,7 +46,8 @@ const UpcomingMovies = () => {
                 <MovieCard movie={movie} />
               </Box>
             ))}
-        </div>
+          </div>
+        )}
         {numOfPages > 1 && (
           <ItemPagination setPage={setPage} numOfPages={numOfPages} />
         )}
