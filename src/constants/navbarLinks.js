@@ -53,48 +53,48 @@ export const social = [
 export const movies = [
   {
     id: 2.1,
-    text: "Movies 2021",
-    url: "/movies?year=2021",
+    text: "Popular",
+    url: "/movies",
   },
   {
     id: 2.2,
-    text: "Movies 2020",
-    url: "/movies?year=2020",
+    text: "Upcoming",
+    url: "/movies/upcoming",
   },
   {
     id: 2.3,
-    text: "Movies 2019",
-    url: "/movies?year=2019",
+    text: "Top Rated",
+    url: "/movies/top-rated",
   },
 ];
 
-export const series = [
+export const shows = [
   {
     id: 2.1,
-    text: "Series 2021",
-    url: "/series?year=2021",
+    text: "Popular",
+    url: "/shows",
   },
   {
     id: 2.2,
-    text: "Series 2020",
-    url: "/series?year=2020",
+    text: "Airing Today",
+    url: "/shows/airing-today",
   },
   {
     id: 2.3,
-    text: "Series 2019",
-    url: "/series?year=2019",
+    text: "Top Rated",
+    url: "/shows/top-rated",
   },
 ];
 
 export const trending = [
   {
     id: 3.1,
-    text: "Movie this week",
+    text: "Movies this week",
     url: "/trending?media_type=movie",
   },
   {
     id: 3.2,
-    text: "Series this week",
+    text: "Tv shows this week",
     url: "/trending?media_type=tv",
   },
 ];
