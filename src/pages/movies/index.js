@@ -43,7 +43,7 @@ const Movies = () => {
                 container
                 key={movie.id}
                 sx={{ maxWidth: { xs: 150, md: 175 } }}>
-                <MovieCard movie={movie} media_type="movie" />
+                <MovieCard movie={movie} />
               </Box>
             ))}
         </div>
