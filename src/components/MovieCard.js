@@ -25,7 +25,7 @@ const MovieCard = ({ movie }) => {
   if (title) {
     type = "movie";
   } else {
-    type = "tv";
+    type = "show";
   }
 
   const [anchorEl, setAnchorEl] = React.useState(null);
