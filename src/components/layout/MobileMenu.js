@@ -12,7 +12,7 @@ import {
 import { Home, Whatshot, Movie, Tv, Search } from "@mui/icons-material";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import { movies, series, trending } from "../../constants/navbarLinks";
+import { movies, shows, trending } from "../../constants/navbarLinks";
 
 const SubMenu = () => {
   const [open1, setOpen1] = useState(false);
@@ -41,9 +41,7 @@ const SubMenu = () => {
           <ListItemIcon>
             <Movie />
           </ListItemIcon>
-          <Link to="/movies">
-            <ListItemText primary="Movie" />
-          </Link>
+          <ListItemText primary="Movie" />
           {open1 ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open1} timeout="auto" unmountOnExit>
@@ -63,14 +61,12 @@ const SubMenu = () => {
           <ListItemIcon>
             <Tv />
           </ListItemIcon>
-          <Link to="/series">
-            <ListItemText primary="Series" />
-          </Link>
+          <ListItemText primary="Tv Shows" />
           {open2 ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open2} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {series.map((i) => {
+            {shows.map((i) => {
               return (
                 <ListItemButton sx={{ pl: 4 }}>
                   <Link to={i.url}>
