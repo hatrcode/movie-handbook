@@ -4,7 +4,7 @@ import Layout from "../components/layout/Layout";
 import Seo from "../components/layout/SEO";
 import MovieCard from "../components/MovieCard";
 import SearchBar from "../components/SearchBar";
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Button } from "@mui/material";
 
 const SearchPage = ({ location }) => {
   const params = new URLSearchParams(location.search);
@@ -43,7 +43,9 @@ const SearchPage = ({ location }) => {
         )}
         {query && (
           <div>
-            <Typography variant="h2">Search results</Typography>
+            <Typography variant="h2" align="center" gutterBottom>
+              Search results
+            </Typography>
             {loading && (
               <Typography variant="h4" gutterBottom align="center">
                 Searching...
@@ -52,8 +54,10 @@ const SearchPage = ({ location }) => {
             {content.length === 0 && !loading && (
               <div className="error-container">
                 <p>Sorry. We couldn’t find what you were looking for.</p>
-                <Link to="/" className="btn">
-                  Back to Homepage
+                <Link to="/">
+                  <Button size="small" variant="contained" color="primary">
+                    Back to Homepage
+                  </Button>
                 </Link>
               </div>
             )}
