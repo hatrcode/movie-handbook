@@ -4,7 +4,7 @@ import MovieCard from "../components/MovieCard";
 import Layout from "../components/layout/Layout";
 import Seo from "../components/layout/SEO";
 import ItemPagination from "../components/ItemPagination";
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 
 const Trending = ({ location }) => {
   const [page, setPage] = useState(1);
@@ -39,7 +39,14 @@ const Trending = ({ location }) => {
         )}
         <div className="item-list">
           {content &&
-            content.map((movie) => <MovieCard movie={movie} key={movie.id} />)}
+            content.map((movie) => (
+              <Box
+                container
+                key={movie.id}
+                sx={{ maxWidth: { xs: 150, md: 175 } }}>
+                <MovieCard movie={movie} />
+              </Box>
+            ))}
         </div>
         {numOfPages > 1 && (
           <ItemPagination setPage={setPage} numOfPages={numOfPages} />
