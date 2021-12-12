@@ -40,8 +40,7 @@ const SearchPage = ({ location }) => {
               <SearchBar />
             </div>
           </div>
-        ) : null}
-        {query ? (
+        ) : (
           <div>
             <Typography variant="h2" align="center" gutterBottom>
               Search results
@@ -74,7 +73,7 @@ const SearchPage = ({ location }) => {
               </div>
             )}
           </div>
-        ) : null}
+        )}
       </div>
     </Layout>
   );
