@@ -8,7 +8,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import { Box } from "@mui/system";
 
-const MovieCard = ({ movie }) => {
+const ItemCard = ({ movie }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   // Controller for Popover
@@ -117,4 +117,4 @@ const MovieCard = ({ movie }) => {
   );
 };
 
-export default MovieCard;
+export default ItemCard;
