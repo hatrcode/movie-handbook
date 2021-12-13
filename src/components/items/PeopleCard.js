@@ -1,7 +1,7 @@
 import React from "react";
-import { img_300 } from "../constants/links";
+import { img_300 } from "../../constants/links";
 import { Card, CardMedia, CardContent, Typography } from "@mui/material";
-import noPic from "../images/noPic.svg";
+import noPic from "../../images/noPic.svg";
 
 const PeopleCard = ({ people }) => {
   const { name, character, profile_path } = people;
