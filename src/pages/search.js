@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "gatsby";
 import Layout from "../components/layout/Layout";
 import Seo from "../components/layout/SEO";
-import MovieCard from "../components/MovieCard";
+import ItemCards from "../components/items/ItemCards";
 import SearchBar from "../components/SearchBar";
-import { Typography, Box, Button } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 
 const SearchPage = ({ location }) => {
   const params = new URLSearchParams(location.search);
@@ -60,18 +60,7 @@ const SearchPage = ({ location }) => {
                 </Link>
               </div>
             )}
-            {content && (
-              <div className="item-list">
-                {content.map((movie) => (
-                  <Box
-                    container
-                    key={movie.id}
-                    sx={{ maxWidth: { xs: 150, md: 175 } }}>
-                    <MovieCard movie={movie} />
-                  </Box>
-                ))}
-              </div>
-            )}
+            {content && <ItemCards content={content} />}
           </div>
         )}
       </div>

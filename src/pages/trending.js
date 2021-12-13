@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useFetch } from "../hooks/useFetch";
-import MovieCard from "../components/MovieCard";
 import Layout from "../components/layout/Layout";
 import Seo from "../components/layout/SEO";
-import ItemPagination from "../components/ItemPagination";
-import { Typography, Box } from "@mui/material";
+import ItemCards from "../components/items/ItemCards";
+import ItemPagination from "../components/items/ItemPagination";
+import { Typography } from "@mui/material";
 
 const Trending = ({ location }) => {
   const [page, setPage] = useState(1);
@@ -37,18 +37,7 @@ const Trending = ({ location }) => {
             Loading...
           </Typography>
         )}
-        {content && (
-          <div className="item-list">
-            {content.map((movie) => (
-              <Box
-                container
-                key={movie.id}
-                sx={{ maxWidth: { xs: 150, md: 175 } }}>
-                <MovieCard movie={movie} />
-              </Box>
-            ))}
-          </div>
-        )}
+        {content && <ItemCards content={content} />}
         {numOfPages > 1 && (
           <ItemPagination setPage={setPage} numOfPages={numOfPages} />
         )}
