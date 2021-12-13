@@ -102,7 +102,7 @@ const ItemCard = ({ movie }) => {
                   <Typography variant="body2">
                     {overview.split(".")[0]}.
                   </Typography>
-                  <Link to={`/${type}/${id}`} state={{ id: id }}>
+                  <Link to={`/${type}/${id}`}>
                     <Button
                       size="small"
                       variant="contained"
