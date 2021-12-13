@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "gatsby";
-import { img_500, img_1920, unavailable } from "../../constants/links";
+import { img_300, img_500, img_1920, unavailable } from "../../constants/links";
 import Layout from "../../components/layout/Layout";
 import Seo from "../../components/layout/SEO";
 import { Typography, Button, Grid, Box, Modal, Container } from "@mui/material";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-import PeopleCard from "../../components/PeopleCard";
-import MovieCard from "../../components/MovieCard";
+import PeopleCard from "../../components/items/PeopleCard";
 import { dateConvert } from "../../config/dateConvert";
 
 const TvTemplate = ({ params }) => {
@@ -327,12 +326,27 @@ const TvTemplate = ({ params }) => {
                 <div className="scroller-wrap is-fading">
                   <div className="scroller">
                     {similar.results.slice(0, 9).map((movie) => (
-                      <Box
-                        container
-                        key={movie.id}
-                        sx={{ minWidth: { xs: 100, sm: 150, md: 175 } }}>
-                        <MovieCard movie={movie} />
-                      </Box>
+                      <Link to={`/tv/${movie.id}`}>
+                        <Box
+                          sx={{
+                            position: "relative",
+                            display: "inline-block",
+                            lineHeight: 0,
+                          }}>
+                          <img
+                            src={
+                              movie.poster_path
+                                ? `${img_300}${movie.poster_path}`
+                                : unavailable
+                            }
+                            alt={movie.title}
+                            width="100%"
+                          />
+                          <div className="movie-info">
+                            <p style={{ marginBottom: "0" }}>{movie.title}</p>
+                          </div>
+                        </Box>
+                      </Link>
                     ))}
                   </div>
                 </div>
