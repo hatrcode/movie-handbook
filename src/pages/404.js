@@ -7,7 +7,7 @@ const Error = () => {
   return (
     <Layout>
       <Seo title="Page Not Found" />
-      <main className="error-page">
+      <main className="main-page">
         <div className="error-container">
           <h1>404 Page</h1>
           <p>Sorry. We couldn’t find what you were looking for.</p>
