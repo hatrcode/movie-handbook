@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
-import Genres from "../../components/Genres";
-import MovieCard from "../../components/MovieCard";
-import useGenre from "../../hooks/useGerne";
 import Layout from "../../components/layout/Layout";
 import Seo from "../../components/layout/SEO";
-import ItemPagination from "../../components/ItemPagination";
-import { Typography, Box } from "@mui/material";
+import Genres from "../../components/items/Genres";
+import useGenre from "../../hooks/useGerne";
+import ItemCards from "../../components/items/ItemCards";
+import ItemPagination from "../../components/items/ItemPagination";
+import { Typography } from "@mui/material";
 
 const TopMovies = () => {
   const [genres, setGenres] = useState([]);
@@ -36,18 +36,7 @@ const TopMovies = () => {
             Loading...
           </Typography>
         )}
-        {content && (
-          <div className="item-list">
-            {content.map((movie) => (
-              <Box
-                container
-                key={movie.id}
-                sx={{ maxWidth: { xs: 150, md: 175 } }}>
-                <MovieCard movie={movie} />
-              </Box>
-            ))}
-          </div>
-        )}
+        {content && <ItemCards content={content} />}
         {numOfPages > 1 && (
           <ItemPagination setPage={setPage} numOfPages={numOfPages} />
         )}
