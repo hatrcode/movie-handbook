@@ -1,0 +1,17 @@
+export const site = {
+  title: "Movie Handbook",
+  titleAlt: "Movies",
+  description: "Search your favorite movies.",
+  headline: "Movie search",
+  url: "https://movie-handbook.netlify.app",
+  siteLanguage: "en",
+  ogLanguage: "en_US",
+  author: "Ha Truong",
+  banner: "/cover.png",
+  favicon: "/favicon.svg",
+  shortName: "MH",
+  themeColor: "#3D63AE",
+  backgroundColor: "#EBEDF2",
+  twitter: "@expatolife",
+  facebook: "expatolife",
+};

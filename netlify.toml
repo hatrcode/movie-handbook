@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[redirects]]
+  from = "/series"
+  to = "/shows"
+  status = 301
+
+[[redirects]]
+  from = "/tv/:id"
+  to = "/show/:id"
+  status = 301

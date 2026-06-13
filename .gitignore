@@ -53,10 +53,12 @@ typings/
 
 # dotenv environment variable files
 .env*
+!.env.example
 
-# gatsby files
+# framework build files
 .cache/
-public
+.next/
+out/
 
 # Mac files
 .DS_Store
