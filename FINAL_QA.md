@@ -1,8 +1,32 @@
 # Final QA
 
+## Visual Identity Refresh (Blue/Navy Palette)
+
+Updated the design system to a premium navy/blue identity:
+
+| Token | Before | After |
+|-------|--------|-------|
+| `--bg` | `#050608` (near-black) | `#050816` (deep navy) |
+| `--accent` | `#ff3d5a` (red) | `#3b82f6` (blue-500) |
+| `--accent-2` | `#8b5cf6` (purple) | `#38bdf8` (sky-400) |
+| `--gradient-brand` | red → purple → sky | blue → sky (2-stop) |
+| `--font-display` | Manrope | Space Grotesk |
+| Eyebrow labels | amber | sky-400 (`--accent-2`) |
+| Search focus ring | amber | blue |
+| Card hover glow | red/purple | blue/sky |
+| Nav/mobile bg | `rgba(5,6,8,…)` | `rgba(5,8,22,…)` (navy) |
+| Hero/detail overlays | pure black | navy (`rgba(5,8,22,…)`) |
+| Title gradients | white → purple | white → blue |
+
+MUI theme updated: `primary.main #3b82f6`, `secondary.main #38bdf8`, background colours match navy tokens.
+
+Post-change results:
+- `npm run lint`: ✓ clean
+- `npm run build`: ✓ passed — 11 routes, no type errors
+
 ## 2026 Visual Redesign Pass
 
-- Redesigned the site around a dark cinematic visual system with near-black backgrounds, glass panels, red/purple/blue/amber accents, rounded poster cards, premium nav, and responsive page shells.
+- Redesigned the site around a dark cinematic visual system with near-black backgrounds, glass panels, blue/navy/sky accents, rounded poster cards, premium nav, and responsive page shells.
 - Added reusable UI components:
   - `PageShell`
   - `SectionHeader`

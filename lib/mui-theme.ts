@@ -4,18 +4,18 @@ const muiTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#ff3d5a",
+      main: "#3b82f6",
     },
     secondary: {
-      main: "#8b5cf6",
+      main: "#38bdf8",
     },
     background: {
-      default: "#050608",
-      paper: "#0b0d12",
+      default: "#050816",
+      paper: "#0b1020",
     },
     text: {
-      primary: "#f7f7fb",
-      secondary: "#a6adbd",
+      primary: "#f8fafc",
+      secondary: "#94a3b8",
     },
   },
   typography: {
