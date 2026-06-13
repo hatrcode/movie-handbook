@@ -92,6 +92,10 @@ export function getTmdbApiKey() {
   return process.env.NEXT_PUBLIC_TMDB_API || "";
 }
 
+export function hasTmdbApiKey() {
+  return getTmdbApiKey().trim().length > 0;
+}
+
 export function getGenreQuery(selectedGenres: Genre[]) {
   return selectedGenres.map((genre) => genre.id).join(",");
 }

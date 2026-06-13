@@ -5,10 +5,19 @@ export default function SearchBar() {
     <div className="search-container">
       <form className="search-form" action="/search" method="GET">
         <div className="search-box">
-          <span className="glass">
+          <span className="glass" aria-hidden="true">
             <SearchIcon />
           </span>
-          <input type="text" id="search" placeholder="Search..." name="s" />
+          <label className="sr-only" htmlFor="search">
+            Search movies and TV shows
+          </label>
+          <input
+            type="text"
+            id="search"
+            placeholder="Search..."
+            name="s"
+            autoComplete="off"
+          />
         </div>
       </form>
     </div>

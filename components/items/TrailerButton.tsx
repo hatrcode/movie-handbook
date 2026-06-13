@@ -20,6 +20,7 @@ export default function TrailerButton({
         startIcon={<YouTubeIcon />}
         color="primary"
         onClick={() => setOpen(true)}
+        aria-label={`Play trailer for ${title}`}
         sx={{ mt: 1 }}
       >
         Trailer
@@ -45,9 +46,11 @@ export default function TrailerButton({
           onClick={() => setOpen(false)}
         >
           <iframe
-            title={title}
+            title={`Trailer for ${title}`}
             width="85%"
             height="85%"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
             src={`https://www.youtube.com/embed/${videoKey}?autoplay=1&mute=1`}
           />
         </Box>

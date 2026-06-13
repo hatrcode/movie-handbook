@@ -6,9 +6,11 @@ import Link from "next/link";
 import { Typography, Button, Grid, Box, Container } from "@mui/material";
 import PeopleCard from "@/components/items/PeopleCard";
 import TrailerButton from "@/components/items/TrailerButton";
+import { StatusMessage } from "@/components/StatusMessage";
 import { dateConvert } from "@/lib/date";
 import {
   buildDetailUrl,
+  hasTmdbApiKey,
   type MediaItem,
   type ShowDetails,
 } from "@/lib/tmdb";
@@ -16,16 +18,27 @@ import { img300, img500, img1920, unavailable } from "@/lib/links";
 
 export default function ShowDetailPageClient({ id }: { id: string }) {
   const [content, setContent] = useState<ShowDetails | null>(null);
-  const [loading, setLoading] = useState(true);
+  const hasApiKey = hasTmdbApiKey();
+  const [loading, setLoading] = useState(hasApiKey);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!hasApiKey) {
+      return;
+    }
+
     let ignore = false;
 
     async function fetchData() {
       setLoading(true);
+      setError(null);
       try {
         const response = await fetch(buildDetailUrl("tv", id));
         const data = await response.json();
+
+        if (!response.ok || data.success === false || !data.id) {
+          throw new Error(data.status_message || "TMDB TV request failed.");
+        }
 
         if (!ignore) {
           setContent(data);
@@ -34,6 +47,9 @@ export default function ShowDetailPageClient({ id }: { id: string }) {
         console.error(err);
         if (!ignore) {
           setContent(null);
+          setError(
+            err instanceof Error ? err.message : "Unable to load this TV show."
+          );
         }
       } finally {
         if (!ignore) {
@@ -47,7 +63,20 @@ export default function ShowDetailPageClient({ id }: { id: string }) {
     return () => {
       ignore = true;
     };
-  }, [id]);
+  }, [hasApiKey, id]);
+
+  if (!hasApiKey) {
+    return (
+      <main className="main-page">
+        <StatusMessage
+          title="TMDB API key missing"
+          message="Set NEXT_PUBLIC_TMDB_API in your local environment or Netlify site settings to load TV show details."
+          actionHref="/shows"
+          actionLabel="All TV shows"
+        />
+      </main>
+    );
+  }
 
   if (loading) {
     return (
@@ -60,14 +89,12 @@ export default function ShowDetailPageClient({ id }: { id: string }) {
   if (!content) {
     return (
       <main className="main-page">
-        <div className="error-container">
-          <p>Sorry. We couldn&apos;t load this TV show.</p>
-          <Link href="/shows">
-            <Button size="small" variant="contained" color="primary">
-              All TV shows
-            </Button>
-          </Link>
-        </div>
+        <StatusMessage
+          title="Unable to load this TV show"
+          message={error || "Sorry. We couldn't load this TV show."}
+          actionHref="/shows"
+          actionLabel="All TV shows"
+        />
       </main>
     );
   }

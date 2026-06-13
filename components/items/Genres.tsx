@@ -2,7 +2,12 @@
 
 import { useEffect } from "react";
 import { Chip } from "@mui/material";
-import { buildGenresUrl, type Genre, type MediaType } from "@/lib/tmdb";
+import {
+  buildGenresUrl,
+  hasTmdbApiKey,
+  type Genre,
+  type MediaType,
+} from "@/lib/tmdb";
 
 export default function Genres({
   selectedGenres,
@@ -34,6 +39,10 @@ export default function Genres({
   };
 
   useEffect(() => {
+    if (!hasTmdbApiKey()) {
+      return;
+    }
+
     let ignore = false;
 
     async function fetchGenres() {

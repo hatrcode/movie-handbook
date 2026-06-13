@@ -17,9 +17,9 @@ export default function SubNavDrop({
 }) {
   return (
     <div className="dropdown">
-      <button className="dropbtn">
-        <Link href={url}>{main}</Link>
-      </button>
+      <Link className="dropbtn" href={url}>
+        {main}
+      </Link>
       <div className="dropdown-content">
         {sub.map((item) => (
           <Link key={item.id} href={item.url}>
