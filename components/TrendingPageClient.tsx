@@ -17,14 +17,21 @@ import {
 } from "@/lib/tmdb";
 
 export default function TrendingPageClient() {
-  const [page, setPage] = useState(1);
   const searchParams = useSearchParams();
   const mediaType =
     (searchParams.get("media_type") as TrendingMediaType | null) || "all";
   const time = searchParams.get("time") || "week";
-  const hasApiKey = hasTmdbApiKey();
 
-  const url = hasApiKey ? buildTrendingUrl(mediaType, time, page) : null;
+  const currentFilter = `${mediaType}-${time}`;
+  const [pageState, setPageState] = useState({ filter: currentFilter, page: 1 });
+  const effectivePage = pageState.filter === currentFilter ? pageState.page : 1;
+
+  function handlePageChange(p: number) {
+    setPageState({ filter: currentFilter, page: p });
+  }
+
+  const hasApiKey = hasTmdbApiKey();
+  const url = hasApiKey ? buildTrendingUrl(mediaType, time, effectivePage) : null;
   const { content, numOfPages, loading, error } = useTmdbList(url);
 
   let type = "";
@@ -67,7 +74,7 @@ export default function TrendingPageClient() {
         </section>
       )}
       {numOfPages > 1 && (
-        <ItemPagination setPage={setPage} numOfPages={numOfPages} />
+        <ItemPagination page={effectivePage} setPage={handlePageChange} numOfPages={numOfPages} />
       )}
     </PageShell>
   );

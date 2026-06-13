@@ -19,6 +19,7 @@ import {
   type MovieDetails,
 } from "@/lib/tmdb";
 import { img500, img1920, unavailable } from "@/lib/links";
+import { getYear } from "@/lib/date";
 
 export default function MovieDetailPageClient({ id }: { id: string }) {
   const [content, setContent] = useState<MovieDetails | null>(null);
@@ -123,12 +124,12 @@ export default function MovieDetailPageClient({ id }: { id: string }) {
     similar,
   } = content;
 
-  const year = release_date ? new Date(release_date).getFullYear() : "";
+  const year = release_date ? getYear(release_date) : "";
   const cardTitle = `${title || "Movie"}${year ? ` (${year})` : ""}`;
   const directorList = credits
     ? credits.crew.filter(
         (director) =>
-          director.job === "Executive Producer" &&
+          director.job === "Director" &&
           director.known_for_department === "Directing"
       )
     : [];
@@ -171,7 +172,7 @@ export default function MovieDetailPageClient({ id }: { id: string }) {
                   {year ? <span>{year}</span> : null}
                   {runtime ? (
                     <span>
-                      {Math.floor(runtime / 60)}h {runtime % 60}m
+                      {runtime >= 60 ? `${Math.floor(runtime / 60)}h ` : ""}{runtime % 60}m
                     </span>
                   ) : null}
                   <RatingBadge rating={vote_average} />
@@ -223,12 +224,12 @@ export default function MovieDetailPageClient({ id }: { id: string }) {
                   <strong>Status</strong>: {status}
                 </p>
               ) : null}
-              {budget ? (
+              {budget != null ? (
                 <p>
                   <strong>Budget</strong>: ${budget.toLocaleString("en-US")}
                 </p>
               ) : null}
-              {revenue ? (
+              {revenue != null ? (
                 <p>
                   <strong>Revenue</strong>: ${revenue.toLocaleString("en-US")}
                 </p>

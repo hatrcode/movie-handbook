@@ -1,30 +1,26 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { Whatshot, Movie, Tv, Search } from "@mui/icons-material";
 
+function getActiveTab(pathname: string) {
+  if (pathname.startsWith("/movies") || pathname.startsWith("/movie/")) return 1;
+  if (pathname.startsWith("/shows") || pathname.startsWith("/show/")) return 2;
+  if (pathname.startsWith("/trending")) return 3;
+  return 0;
+}
+
 export default function BottomNav() {
   const pathname = usePathname();
-  const initialValue = pathname.startsWith("/movies")
-    ? 1
-    : pathname.startsWith("/shows")
-      ? 2
-      : pathname.startsWith("/trending")
-        ? 3
-        : 0;
-  const [value, setValue] = useState(initialValue);
+  const value = getActiveTab(pathname);
 
   return (
     <BottomNavigation
       className="bottom-nav"
       showLabels
       value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
     >
       <BottomNavigationAction
         label="Search"

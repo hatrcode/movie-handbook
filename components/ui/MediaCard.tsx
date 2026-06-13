@@ -4,18 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import RatingBadge from "@/components/ui/RatingBadge";
 import { img300, unavailable } from "@/lib/links";
+import { getYear } from "@/lib/date";
 import type { MediaItem } from "@/lib/tmdb";
 
 function getMediaHref(item: MediaItem) {
-  if (item.media_type === "person") {
-    return null;
-  }
-
-  if (item.title || item.media_type === "movie") {
-    return `/movie/${item.id}`;
-  }
-
-  return `/show/${item.id}`;
+  if (item.media_type === "person") return null;
+  if (item.media_type === "tv") return `/show/${item.id}`;
+  if (item.media_type === "movie") return `/movie/${item.id}`;
+  // no media_type (list endpoints): use title vs name as heuristic
+  if (item.name && !item.title) return `/show/${item.id}`;
+  return `/movie/${item.id}`;
 }
 
 export default function MediaCard({
@@ -29,7 +27,7 @@ export default function MediaCard({
   const href = getMediaHref(item);
   const imgUrl = item.poster_path || item.profile_path;
   const date = item.release_date || item.first_air_date;
-  const year = date ? new Date(date).getFullYear() : null;
+  const year = date ? getYear(date) : null;
   const type = item.media_type === "tv" || (!item.title && item.name) ? "Show" : "Movie";
   const card = (
     <article className={`media-card ${compact ? "media-card-compact" : ""}`}>
@@ -42,6 +40,14 @@ export default function MediaCard({
           sizes={compact ? "160px" : "(max-width: 700px) 45vw, 210px"}
         />
         <div className="media-card-glow" />
+        <div className="media-card-score">
+          <RatingBadge rating={item.vote_average} />
+        </div>
+        {item.overview && !compact && (
+          <div className="media-card-overlay">
+            <p>{item.overview}</p>
+          </div>
+        )}
       </div>
       <div className="media-card-body">
         <div className="media-card-meta">
@@ -49,7 +55,6 @@ export default function MediaCard({
           <span>{type}</span>
         </div>
         <h3>{label}</h3>
-        <RatingBadge rating={item.vote_average} />
       </div>
     </article>
   );

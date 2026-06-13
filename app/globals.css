@@ -23,12 +23,14 @@
   --radius-xl: 34px;
   --shadow-soft: 0 18px 70px rgba(0, 0, 0, 0.32);
   --shadow-card: 0 16px 38px rgba(0, 0, 0, 0.36);
+  --shadow-glow: 0 0 0 1px rgba(255, 61, 90, 0.3), 0 16px 48px rgba(139, 92, 246, 0.25);
   --max-width: 1200px;
   --nav-height: 78px;
   --focus: #facc15;
   --font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
   --font-display: "Manrope", var(--font-body);
+  --gradient-brand: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 55%, var(--accent-3) 100%);
 }
 
 *,
@@ -154,12 +156,25 @@ img {
 }
 
 .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   margin-bottom: 0.65rem;
   color: var(--amber);
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 1.5rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--gradient-brand);
+  flex-shrink: 0;
 }
 
 .button-link,
@@ -172,8 +187,18 @@ img {
 .MuiButton-containedPrimary,
 .MuiButton-contained {
   color: #fff !important;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2)) !important;
-  box-shadow: 0 14px 32px rgba(255, 61, 90, 0.25) !important;
+  background: var(--gradient-brand) !important;
+  background-size: 200% 200% !important;
+  background-position: 0% 50% !important;
+  box-shadow: 0 14px 32px rgba(255, 61, 90, 0.3), 0 0 0 0 rgba(139, 92, 246, 0) !important;
+  transition: box-shadow 240ms ease, transform 180ms ease, background-position 400ms ease !important;
+}
+
+.MuiButton-containedPrimary:hover,
+.MuiButton-contained:hover {
+  background-position: 100% 50% !important;
+  box-shadow: 0 18px 42px rgba(255, 61, 90, 0.38), 0 0 0 3px rgba(139, 92, 246, 0.22) !important;
+  transform: translateY(-2px) !important;
 }
 
 .MuiButton-outlined,
@@ -218,13 +243,38 @@ img {
   letter-spacing: -0.04em;
 }
 
+.logo a {
+  position: relative;
+}
+
 .logo a::before {
   content: "";
   width: 0.9rem;
   height: 0.9rem;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--accent), var(--amber));
-  box-shadow: 0 0 22px rgba(255, 61, 90, 0.8);
+  background: var(--gradient-brand);
+  box-shadow: 0 0 16px rgba(255, 61, 90, 0.6);
+  flex-shrink: 0;
+}
+
+.logo a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  translate: 0 -50%;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.55);
+  filter: blur(6px);
+  animation: logo-bloom 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes logo-bloom {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.8); }
 }
 
 .nav-links {
@@ -256,22 +306,40 @@ img {
 
 .dropdown-content {
   position: absolute;
-  top: calc(100% + 0.65rem);
+  top: 100%;
   left: 0;
   min-width: 190px;
-  display: none;
+  display: grid;
+  gap: 0.15rem;
   padding: 0.5rem;
+  padding-top: calc(0.5rem + 0.65rem); /* visual gap baked in as padding */
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: rgba(11, 13, 18, 0.96);
   box-shadow: var(--shadow-card);
   backdrop-filter: blur(18px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px) scale(0.97);
+  transform-origin: top left;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+/* Invisible bridge that fills the gap so hover isn't broken mid-travel */
+.dropdown-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0.65rem;
 }
 
 .dropdown:hover .dropdown-content,
 .dropdown:focus-within .dropdown-content {
-  display: grid;
-  gap: 0.15rem;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
 }
 
 .dropdown-content a {
@@ -421,6 +489,10 @@ img {
   max-width: 12ch;
   margin-bottom: 1rem;
   font-size: clamp(2.6rem, 7vw, 5.5rem);
+  background: linear-gradient(135deg, #fff 0%, var(--text-soft) 60%, rgba(139, 92, 246, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .hero-copy p {
@@ -461,7 +533,13 @@ img {
 .hero-poster {
   justify-self: end;
   width: min(100%, 320px);
-  transform: rotate(3deg);
+  transform: rotate(3deg) translateY(-8px);
+  filter: drop-shadow(0 32px 64px rgba(0, 0, 0, 0.7));
+  transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hero-banner:hover .hero-poster {
+  transform: rotate(2deg) translateY(-16px);
 }
 
 .hero-poster img,
@@ -477,15 +555,32 @@ img {
 }
 
 .section-header {
+  position: relative;
   display: flex;
   align-items: end;
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1.25rem;
+  padding-left: 1rem;
+}
+
+.section-header::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 999px;
+  background: var(--gradient-brand);
 }
 
 .section-header h2 {
   font-size: clamp(1.55rem, 3vw, 2.15rem);
+  background: linear-gradient(120deg, var(--text) 0%, var(--text-soft) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .section-action a {
@@ -561,14 +656,36 @@ img {
   background: rgba(255, 255, 255, 0.045);
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
-  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  transition: transform 240ms cubic-bezier(0.34, 1.56, 0.64, 1), border-color 180ms ease, box-shadow 240ms ease;
+}
+
+.media-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    125deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.07) 50%,
+    transparent 70%
+  );
+  background-size: 250% 250%;
+  background-position: 200% 200%;
+  transition: background-position 500ms ease;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .media-card-link:hover .media-card,
 .media-card-link:focus-visible .media-card {
-  transform: translateY(-6px);
-  border-color: rgba(255, 255, 255, 0.22);
-  box-shadow: var(--shadow-card);
+  transform: translateY(-8px) scale(1.015);
+  border-color: rgba(139, 92, 246, 0.45);
+  box-shadow: 0 0 0 1px rgba(255, 61, 90, 0.2), 0 20px 48px rgba(0, 0, 0, 0.5), 0 0 30px rgba(139, 92, 246, 0.18);
+}
+
+.media-card-link:hover .media-card::after,
+.media-card-link:focus-visible .media-card::after {
+  background-position: -50% -50%;
 }
 
 .media-card-poster {
@@ -595,6 +712,50 @@ img {
   inset: auto 0 0;
   height: 50%;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.82));
+  transition: opacity 220ms ease;
+}
+
+.media-card-score {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2;
+}
+
+.media-card-link:hover .media-card-glow,
+.media-card-link:focus-visible .media-card-glow {
+  opacity: 0;
+}
+
+.media-card-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: linear-gradient(transparent 10%, rgba(5, 6, 8, 0.97) 50%);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.media-card-link:hover .media-card-overlay,
+.media-card-link:focus-visible .media-card-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.media-card-overlay p {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .media-card-body {
@@ -620,14 +781,8 @@ img {
 
 .rating-badge {
   display: inline-flex;
-  align-items: center;
-  border: 1px solid rgba(245, 184, 75, 0.34);
-  border-radius: 999px;
-  color: #ffe2a3;
-  background: rgba(245, 184, 75, 0.12);
-  padding: 0.22rem 0.5rem;
-  font-size: 0.72rem;
-  font-weight: 900;
+  line-height: 0;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
 }
 
 .media-card-skeleton {
@@ -679,6 +834,10 @@ img {
   max-width: 12ch;
   margin-bottom: 0.8rem;
   font-size: clamp(2rem, 5vw, 3.5rem);
+  background: linear-gradient(130deg, #fff 0%, var(--text-soft) 70%, rgba(139, 92, 246, 0.7) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .search-page-panel {
@@ -748,6 +907,10 @@ img {
 
 .detail-copy h1 {
   font-size: clamp(2rem, 5vw, 4.25rem);
+  background: linear-gradient(130deg, #fff 0%, var(--text-soft) 65%, rgba(139, 92, 246, 0.75) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .detail-tagline {
@@ -825,21 +988,45 @@ img {
   padding-bottom: 1rem;
 }
 
-.scroller .MuiCard-root {
-  min-width: 150px;
+.people-card {
+  min-width: 140px;
   border: 1px solid var(--border);
-  border-radius: var(--radius) !important;
-  color: var(--text);
-  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.05);
   overflow: hidden;
+  flex-shrink: 0;
 }
 
-.scroller .MuiCardContent-root {
-  background: rgba(5, 6, 8, 0.42);
+.people-card-img {
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: #121620;
 }
 
-.scroller .MuiTypography-root {
-  color: inherit;
+.people-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.people-card-body {
+  padding: 0.65rem 0.75rem 0.75rem;
+}
+
+.people-card-body h4 {
+  margin-bottom: 0.2rem;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.people-card-body p {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
 }
 
 .trailer-button {

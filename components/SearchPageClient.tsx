@@ -7,6 +7,7 @@ import { Button, Typography } from "@mui/material";
 import SearchBar from "@/components/SearchBar";
 import { StatusMessage } from "@/components/StatusMessage";
 import ItemCards from "@/components/items/ItemCards";
+import ItemPagination from "@/components/items/ItemPagination";
 import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
 import PageShell from "@/components/ui/PageShell";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -15,7 +16,18 @@ import { buildSearchUrl, hasTmdbApiKey, type MediaItem } from "@/lib/tmdb";
 export default function SearchPageClient() {
   const searchParams = useSearchParams();
   const query = searchParams.get("s");
+  const [pageState, setPageState] = useState<{ query: string | null; page: number }>({
+    query: null,
+    page: 1,
+  });
+  const effectivePage = pageState.query === query ? pageState.page : 1;
+
+  function handlePageChange(p: number) {
+    setPageState({ query, page: p });
+  }
+
   const [content, setContent] = useState<MediaItem[]>([]);
+  const [numOfPages, setNumOfPages] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const hasApiKey = hasTmdbApiKey();
@@ -30,8 +42,9 @@ export default function SearchPageClient() {
     async function handleSubmit() {
       setLoading(true);
       setError(null);
+      setContent([]);
       try {
-        const res = await fetch(buildSearchUrl(query || ""));
+        const res = await fetch(buildSearchUrl(query || "", effectivePage));
         const data = await res.json();
 
         if (!res.ok || data.success === false) {
@@ -40,11 +53,13 @@ export default function SearchPageClient() {
 
         if (!ignore) {
           setContent(data.results || []);
+          setNumOfPages(data.total_pages || 0);
         }
       } catch (err) {
         console.error(err);
         if (!ignore) {
           setContent([]);
+          setNumOfPages(0);
           setError(
             err instanceof Error ? err.message : "Unable to search TMDB."
           );
@@ -61,7 +76,7 @@ export default function SearchPageClient() {
     return () => {
       ignore = true;
     };
-  }, [hasApiKey, query]);
+  }, [hasApiKey, query, effectivePage]);
 
   return (
     <PageShell>
@@ -105,6 +120,9 @@ export default function SearchPageClient() {
             </div>
           )}
           {content.length > 0 && <ItemCards content={content} />}
+          {numOfPages > 1 && (
+            <ItemPagination page={effectivePage} setPage={handlePageChange} numOfPages={numOfPages} />
+          )}
         </section>
       )}
     </PageShell>

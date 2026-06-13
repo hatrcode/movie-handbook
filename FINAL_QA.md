@@ -138,8 +138,30 @@ The migrated app preserves the listing route surface and improves legacy/incorre
   - `/tv/:id` -> `/show/:id`
 - Before deploying, set `NEXT_PUBLIC_TMDB_API` in Netlify site environment variables.
 
+## Senior UX/UI Review Pass
+
+Full review documented in `SENIOR_UX_UI_REVIEW.md`. Five high-priority issues identified and fixed:
+
+| Fix | File(s) | Detail |
+|-----|---------|--------|
+| MUI theme dark mode + correct font | `lib/mui-theme.ts` | Added `mode: "dark"`, palette matched to design tokens (`--accent`, `--accent-2`), font changed from `"Quicksand"` (never loaded) to `"Inter"` |
+| PeopleCard rebuilt without MUI Card | `components/items/PeopleCard.tsx`, `app/globals.css` | Replaced MUI `Card`/`CardMedia` (raw `<img>`, light bg) with custom markup using `next/image`; added `.people-card` CSS matching the dark system |
+| BottomNav active tab stale fix | `components/layout/BottomNav.tsx` | Removed `useState(initialValue)` pattern; active tab now derived from `usePathname()` on every render — also covers `/movie/:id` and `/show/:id` detail routes |
+| `section-header` gradient border | `app/globals.css` | Replaced unreliable `border-image` (fails on single-side in Safari) with a `::before` pseudo-element using `background: var(--gradient-brand)` |
+| MobileMenu "Tv Shows" capitalisation | `components/layout/MobileMenu.tsx` | Corrected to "TV Shows" |
+
+Two lint errors (`react-hooks/set-state-in-effect`) were also fixed in the same pass:
+
+- `TrendingPageClient`: removed `useEffect(() => setPage(1), [mediaType, time])` — replaced with coupled `{ filter, page }` state so page resets automatically when filters change, no effect needed.
+- `SearchPageClient`: same pattern — `{ query, page }` state replaces the two-effect approach; `effectivePage` derives to 1 automatically when query changes.
+
+Post-fix results:
+- `npm run lint`: ✓ clean (0 errors, 0 warnings)
+- `npm run build`: ✓ passed — 11 routes, Turbopack, no type errors
+
 ## Remaining Issues and Follow-Up
 
 - Browser screenshot/mobile QA was not completed because this workspace has no Chromium/Chrome/Playwright runtime installed.
 - TMDB-backed data loading should be manually checked in a browser after adding `NEXT_PUBLIC_TMDB_API`.
 - The audit warning in `npm audit` remains until Next publishes or resolves the upstream `postcss` advisory without a downgrade path.
+- Medium-priority UX issues documented in `SENIOR_UX_UI_REVIEW.md` (TrailerButton close button, SearchBar submit affordance, search-cta responsive gap) remain for a follow-up pass.

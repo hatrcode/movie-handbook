@@ -68,7 +68,7 @@ export default function MobileMenu() {
           <ListItemIcon>
             <Tv />
           </ListItemIcon>
-          <ListItemText primary="Tv Shows" />
+          <ListItemText primary="TV Shows" />
           {open2 ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open2} timeout="auto" unmountOnExit>

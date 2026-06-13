@@ -3,12 +3,14 @@ import Image from "next/image";
 import { Button } from "@mui/material";
 import RatingBadge from "@/components/ui/RatingBadge";
 import { img500, img1920, unavailable } from "@/lib/links";
+import { getYear } from "@/lib/date";
 import type { MediaItem } from "@/lib/tmdb";
 
 function getHref(item: MediaItem) {
-  return item.title || item.media_type === "movie"
-    ? `/movie/${item.id}`
-    : `/show/${item.id}`;
+  if (item.media_type === "tv") return `/show/${item.id}`;
+  if (item.media_type === "movie") return `/movie/${item.id}`;
+  if (item.name && !item.title) return `/show/${item.id}`;
+  return `/movie/${item.id}`;
 }
 
 export default function HeroBanner({ item }: { item?: MediaItem }) {
@@ -18,7 +20,7 @@ export default function HeroBanner({ item }: { item?: MediaItem }) {
     item?.overview ||
     "Discover films and shows with cinematic previews, ratings, cast details, trailers and recommendations powered by TMDB.";
   const date = item?.release_date || item?.first_air_date;
-  const year = date ? new Date(date).getFullYear() : "Curated";
+  const year = date ? getYear(date) : "Curated";
   const mediaType = item?.media_type === "tv" || (!item?.title && item?.name) ? "Show" : "Movie";
   const href = item ? getHref(item) : "/trending";
 

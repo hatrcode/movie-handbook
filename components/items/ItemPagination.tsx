@@ -3,9 +3,11 @@
 import Pagination from "@mui/material/Pagination";
 
 export default function ItemPagination({
+  page,
   setPage,
   numOfPages = 10,
 }: {
+  page: number;
   setPage: (page: number) => void;
   numOfPages?: number;
 }) {
@@ -17,6 +19,7 @@ export default function ItemPagination({
   return (
     <div className="pagination-wrap">
       <Pagination
+        page={page}
         onChange={(event, page) => handlePageChange(page)}
         count={numOfPages}
         color="primary"

@@ -7,7 +7,7 @@ export const site = {
   siteLanguage: "en",
   ogLanguage: "en_US",
   author: "Ha Truong",
-  banner: "/cover.png",
+  banner: "/cover.webp",
   favicon: "/favicon.svg",
   shortName: "MH",
   themeColor: "#3D63AE",

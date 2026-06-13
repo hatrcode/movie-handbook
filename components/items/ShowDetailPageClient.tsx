@@ -12,7 +12,7 @@ import MediaCard from "@/components/ui/MediaCard";
 import PageShell from "@/components/ui/PageShell";
 import RatingBadge from "@/components/ui/RatingBadge";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { dateConvert } from "@/lib/date";
+import { dateConvert, getYear } from "@/lib/date";
 import {
   buildDetailUrl,
   hasTmdbApiKey,
@@ -129,7 +129,7 @@ export default function ShowDetailPageClient({ id }: { id: string }) {
     similar,
   } = content;
 
-  const year = first_air_date ? new Date(first_air_date).getFullYear() : "";
+  const year = first_air_date ? getYear(first_air_date) : "";
   const cardTitle = `${name || "TV Show"}${year ? ` (${year})` : ""}`;
   const creatorList = created_by ? created_by.map((creator) => creator.name) : [];
   const genreList = genres ? genres.map((genre) => genre.name) : [];
@@ -237,17 +237,17 @@ export default function ShowDetailPageClient({ id }: { id: string }) {
                   <strong>Last air date</strong>: {dateConvert(last_air_date)}
                 </p>
               ) : null}
-              {number_of_episodes ? (
+              {number_of_episodes != null ? (
                 <p>
                   <strong>Episodes</strong>: {number_of_episodes}
                 </p>
               ) : null}
-              {budget ? (
+              {budget != null ? (
                 <p>
                   <strong>Budget</strong>: ${budget.toLocaleString("en-US")}
                 </p>
               ) : null}
-              {revenue ? (
+              {revenue != null ? (
                 <p>
                   <strong>Revenue</strong>: ${revenue.toLocaleString("en-US")}
                 </p>

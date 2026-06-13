@@ -79,7 +79,7 @@ export default function MediaListPage({
         </section>
       )}
       {numOfPages > 1 && (
-        <ItemPagination setPage={setPage} numOfPages={numOfPages} />
+        <ItemPagination page={page} setPage={setPage} numOfPages={numOfPages} />
       )}
     </PageShell>
   );

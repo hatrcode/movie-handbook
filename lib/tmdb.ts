@@ -148,12 +148,12 @@ export function buildTrendingUrl(
   return `${baseUrl}/trending/${mediaType}/${time}?${params.toString()}`;
 }
 
-export function buildSearchUrl(query: string) {
+export function buildSearchUrl(query: string, page = 1) {
   const params = new URLSearchParams({
     api_key: getTmdbApiKey(),
     language: "en-US",
     query,
-    page: "1",
+    page: String(page),
     include_adult: "false",
   });
 
