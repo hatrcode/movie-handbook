@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import SearchBar from "@/components/SearchBar";
 import { StatusMessage } from "@/components/StatusMessage";
 import ItemCards from "@/components/items/ItemCards";
@@ -82,13 +81,13 @@ export default function SearchPageClient() {
     <PageShell>
       {!query ? (
         <section className="search-page-panel glass-panel">
-          <p className="eyebrow">Search the catalogue</p>
+          <p className="eyebrow">Search</p>
           <Typography variant="h2" component="h1">
-            Find movies, shows and people
+            Search the movie universe
           </Typography>
           <p>
-            Search TMDB and open a title to see details, trailers, cast and
-            recommendations.
+            Find films, TV shows, ratings, trailers and recommendations from
+            TMDB.
           </p>
           <div className="search-panel-control">
             <SearchBar />
@@ -110,14 +109,12 @@ export default function SearchPageClient() {
             <StatusMessage title="Unable to search TMDB" message={error} />
           ) : null}
           {content.length === 0 && !loading && !error && hasApiKey && (
-            <div className="error-container">
-              <p>Sorry. We couldn&apos;t find what you were looking for.</p>
-              <Link href="/">
-                <Button size="small" variant="contained" color="primary">
-                  Back to Homepage
-                </Button>
-              </Link>
-            </div>
+            <StatusMessage
+              title={`No results for "${query}"`}
+              message="Try a different title or spelling — or explore what's trending right now."
+              actionHref="/trending"
+              actionLabel="Browse Trending"
+            />
           )}
           {content.length > 0 && <ItemCards content={content} />}
           {numOfPages > 1 && (

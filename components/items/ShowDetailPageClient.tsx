@@ -178,12 +178,12 @@ export default function ShowDetailPageClient({ id }: { id: string }) {
                 <div className="detail-facts">
                   {creatorList.length > 0 ? (
                     <p>
-                      <strong>Creator</strong> {creatorList.join(", ")}
+                      <strong>Creator:</strong> {creatorList.join(", ")}
                     </p>
                   ) : null}
                   {genreList.length > 0 ? (
                     <p>
-                      <strong>Genre</strong> <span>{genreList.join(", ")}</span>
+                      <strong>Genre:</strong> <span>{genreList.join(", ")}</span>
                     </p>
                   ) : null}
                 </div>
@@ -198,7 +198,7 @@ export default function ShowDetailPageClient({ id }: { id: string }) {
       <section className="detail-section page-container">
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, md: 8 }}>
-            <SectionHeader title="Show Cast" />
+            <SectionHeader title="Cast" />
             {peopleList.length > 0 ? (
               <div className="scroller-wrap is-fading">
                 <div className="scroller">
@@ -211,7 +211,7 @@ export default function ShowDetailPageClient({ id }: { id: string }) {
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
             <aside className="detail-info-panel glass-panel">
-              <h2>Information</h2>
+              <h2>Details</h2>
               {original_name ? (
                 <p>
                   <strong>Original name</strong>: {original_name}

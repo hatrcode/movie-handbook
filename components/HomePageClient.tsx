@@ -100,17 +100,17 @@ export default function HomePageClient() {
       )}
       <section className="search-cta glass-panel">
         <div>
-          <p className="eyebrow">Find your next watch</p>
-          <h2>Search across movies and shows</h2>
+          <p className="eyebrow">Search</p>
+          <h2>Find any film or show instantly</h2>
           <p>
-            Jump straight to a title, then explore cast, trailers and similar
-            recommendations.
+            Type a title to get ratings, cast, trailers and curated
+            recommendations — all in one place.
           </p>
         </div>
         <SearchBar />
         <Link href="/search">
           <Button variant="outlined" color="inherit">
-            Open Search
+            Search All
           </Button>
         </Link>
       </section>

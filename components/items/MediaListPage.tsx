@@ -17,6 +17,20 @@ import {
   type MediaType,
 } from "@/lib/tmdb";
 
+function getPageDescription(mediaType: MediaType, filter: string) {
+  if (mediaType === "movie") {
+    if (filter === "popular") return "Browse the movies audiences are watching right now.";
+    if (filter === "upcoming") return "Coming soon to cinemas — discover what's opening next.";
+    if (filter === "top_rated") return "The highest-rated films of all time, according to TMDB audiences.";
+  }
+  if (mediaType === "tv") {
+    if (filter === "popular") return "The TV shows audiences are streaming right now.";
+    if (filter === "airing_today") return "New episodes airing today across every platform.";
+    if (filter === "top_rated") return "The highest-rated TV shows of all time, according to TMDB.";
+  }
+  return "Browse movies and TV shows from TMDB.";
+}
+
 export default function MediaListPage({
   mediaType,
   filter,
@@ -42,10 +56,7 @@ export default function MediaListPage({
         <Typography variant="h3" component="h1">
           {title}
         </Typography>
-        <p>
-          Browse curated TMDB results with quick ratings, stable poster grids
-          and genre filters.
-        </p>
+        <p>{getPageDescription(mediaType, filter)}</p>
       </div>
       {!hasApiKey ? (
         <StatusMessage
@@ -64,12 +75,12 @@ export default function MediaListPage({
       )}
       {loading && <LoadingSkeleton />}
       {error && !loading ? (
-        <StatusMessage title="Unable to load TMDB data" message={error} />
+        <StatusMessage title="Something went wrong" message="We couldn't reach TMDB right now. Try refreshing the page." />
       ) : null}
       {!loading && !error && hasApiKey && content.length === 0 ? (
         <StatusMessage
-          title="No results found"
-          message="TMDB did not return any items for this page."
+          title="Nothing here yet"
+          message="No results came back for this filter. Try a different genre or page."
         />
       ) : null}
       {content.length > 0 && (

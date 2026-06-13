@@ -1,5 +1,65 @@
 # Final QA
 
+## Portfolio Polish Pass
+
+Final pass to bring the project to portfolio-ready standard.
+
+### Copy and labels
+
+| Location | Before | After |
+|----------|--------|-------|
+| Hero fallback headline | "Movie Handbook" | "Find your next film night in seconds." |
+| Hero fallback eyebrow | "Cinema starts here" | "Movie discovery" |
+| Hero fallback buttons | "View Details / Browse Trending" | "Browse Movies / What's Trending" |
+| Search empty heading | "Find movies, shows and people" | "Search the movie universe" |
+| Search empty eyebrow | "Search the catalogue" | "Search" |
+| Search no-results | Plain `<div>` with "Sorry…" copy | `StatusMessage` with friendly copy + Trending CTA |
+| Listing page body copy | "Browse curated TMDB results with quick ratings, stable poster grids and genre filters." | Filter-specific, user-focused descriptions per page |
+| Trending body copy | "See what audiences are watching across TMDB right now." | "What audiences are watching and talking about right now." |
+| Trending error state | "Unable to load trending data" | "Something went wrong" |
+| Trending empty state | "TMDB did not return any trending items…" | "Nothing trending right now" |
+| MediaListPage error | "Unable to load TMDB data" | "Something went wrong" |
+| MediaListPage empty | "TMDB did not return any items…" | "Nothing here yet" |
+| Search CTA heading | "Search across movies and shows" | "Find any film or show instantly" |
+| Movie detail facts | `<strong>Director</strong>` (no colon) | `<strong>Director:</strong>` |
+| Show detail facts | `<strong>Creator</strong>` (no colon) | `<strong>Creator:</strong>` |
+| Movie/Show info panel | `<h2>Information</h2>` | `<h2>Details</h2>` |
+| Show detail cast section | "Show Cast" | "Cast" |
+
+### Label consistency
+
+| Location | Before | After |
+|----------|--------|-------|
+| Trending dropdown | "Movies this week" / "Tv shows this week" | "Movies This Week" / "TV Shows This Week" |
+| Mobile drawer | "Movie" (collapse button) | "Movies" |
+| `app/movies/top-rated` title | "Top-rate Movies" (typo) | "Top Rated Movies" |
+
+### Accessibility
+
+- `LoadingSkeleton` now has `role="status"` and `aria-label="Loading content"` for screen readers.
+- Removed unused `Link` + `Button` import from `SearchPageClient` after replacing the no-results `div` with `StatusMessage`.
+
+### CSS polish
+
+- `detail-tagline`: added `margin-top`, slightly larger font size.
+- `detail-overview`: added `margin-top`, improved `line-height` to 1.7.
+- `detail-facts`: tightened gap from 0.35rem → 0.4rem, margin-top 1rem → 1.1rem.
+- `.trailer-button`: margin-top 1rem → 1.5rem; contained variant gets 1rem font and more generous padding for a premium feel.
+
+### Portfolio documentation
+
+- Created `PROJECT_NOTES.md` with stack, key features, implementation notes, accessibility summary and environment setup.
+
+Post-pass results:
+- `npm run lint`: ✓ clean (0 errors, 0 warnings)
+- `npm run build`: ✓ passed — 11 routes, no type errors
+
+### Remaining limitations
+
+- Browser screenshot / visual QA not possible in this environment (no Chromium).
+- TMDB-backed live data should be verified in a browser with `NEXT_PUBLIC_TMDB_API` set.
+- `npm audit` still reports 2 moderate vulnerabilities through Next.js → `postcss`; not fixed as the only resolution path downgrades Next to 9.3.3.
+
 ## Visual Identity Refresh (Blue/Navy Palette)
 
 Updated the design system to a premium navy/blue identity:

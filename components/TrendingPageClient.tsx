@@ -49,7 +49,7 @@ export default function TrendingPageClient() {
         <Typography variant="h3" component="h1">
           Trending {type} this {time}
         </Typography>
-        <p>See what audiences are watching across TMDB right now.</p>
+        <p>What audiences are watching and talking about right now.</p>
       </div>
       {!hasApiKey ? (
         <StatusMessage
@@ -59,12 +59,12 @@ export default function TrendingPageClient() {
       ) : null}
       {loading && <LoadingSkeleton />}
       {error && !loading ? (
-        <StatusMessage title="Unable to load trending data" message={error} />
+        <StatusMessage title="Something went wrong" message="We couldn't reach TMDB right now. Try refreshing the page." />
       ) : null}
       {!loading && !error && hasApiKey && content.length === 0 ? (
         <StatusMessage
-          title="No trending results found"
-          message="TMDB did not return any trending items for this page."
+          title="Nothing trending right now"
+          message="TMDB didn't return any results for this filter. Try a different time window."
         />
       ) : null}
       {content.length > 0 && (

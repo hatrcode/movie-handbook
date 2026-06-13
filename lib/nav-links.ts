@@ -37,12 +37,12 @@ export const shows = [
 export const trending = [
   {
     id: 3.1,
-    text: "Movies this week",
+    text: "Movies This Week",
     url: "/trending?media_type=movie",
   },
   {
     id: 3.2,
-    text: "Tv shows this week",
+    text: "TV Shows This Week",
     url: "/trending?media_type=tv",
   },
 ];

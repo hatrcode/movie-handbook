@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import MediaListPage from "@/components/items/MediaListPage";
 
 export const metadata: Metadata = {
-  title: "Top-rate Movies",
+  title: "Top Rated Movies",
 };
 
 export default function TopRatedMoviesPage() {
@@ -10,7 +10,7 @@ export default function TopRatedMoviesPage() {
     <MediaListPage
       mediaType="movie"
       filter="top_rated"
-      title="Top-rate Movies"
+      title="Top Rated Movies"
     />
   );
 }

@@ -182,7 +182,7 @@ export default function MovieDetailPageClient({ id }: { id: string }) {
                 <div className="detail-facts">
                   {directorList.length > 0 ? (
                     <p>
-                      <strong>Director</strong>{" "}
+                      <strong>Director:</strong>{" "}
                       {directorList.map((director) => (
                         <span key={director.id}>{director.name}</span>
                       ))}
@@ -190,7 +190,7 @@ export default function MovieDetailPageClient({ id }: { id: string }) {
                   ) : null}
                   {genreList.length > 0 ? (
                     <p>
-                      <strong>Genre</strong> <span>{genreList.join(", ")}</span>
+                      <strong>Genre:</strong> <span>{genreList.join(", ")}</span>
                     </p>
                   ) : null}
                 </div>
@@ -218,7 +218,7 @@ export default function MovieDetailPageClient({ id }: { id: string }) {
           ) : null}
           <Grid size={{ xs: 12, md: 4 }}>
             <aside className="detail-info-panel glass-panel">
-              <h2>Information</h2>
+              <h2>Details</h2>
               {status ? (
                 <p>
                   <strong>Status</strong>: {status}

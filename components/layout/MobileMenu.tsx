@@ -47,7 +47,7 @@ export default function MobileMenu() {
           <ListItemIcon>
             <Movie />
           </ListItemIcon>
-          <ListItemText primary="Movie" />
+          <ListItemText primary="Movies" />
           {open1 ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open1} timeout="auto" unmountOnExit>
