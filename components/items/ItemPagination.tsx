@@ -15,11 +15,7 @@ export default function ItemPagination({
   };
 
   return (
-    <div
-      style={{
-        margin: "0 auto",
-      }}
-    >
+    <div className="pagination-wrap">
       <Pagination
         onChange={(event, page) => handlePageChange(page)}
         count={numOfPages}

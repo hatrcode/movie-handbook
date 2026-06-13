@@ -10,14 +10,16 @@ export default function SubNavDrop({
   main,
   sub,
   url,
+  active = false,
 }: {
   main: string;
   sub: SubLink[];
   url: string;
+  active?: boolean;
 }) {
   return (
     <div className="dropdown">
-      <Link className="dropbtn" href={url}>
+      <Link className={`dropbtn ${active ? "active" : ""}`} href={url}>
         {main}
       </Link>
       <div className="dropdown-content">

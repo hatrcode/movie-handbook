@@ -3,10 +3,15 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Typography, Button, Grid, Box, Container } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import PeopleCard from "@/components/items/PeopleCard";
 import TrailerButton from "@/components/items/TrailerButton";
 import { StatusMessage } from "@/components/StatusMessage";
+import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
+import MediaCard from "@/components/ui/MediaCard";
+import PageShell from "@/components/ui/PageShell";
+import RatingBadge from "@/components/ui/RatingBadge";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { dateConvert } from "@/lib/date";
 import {
   buildDetailUrl,
@@ -14,7 +19,7 @@ import {
   type MediaItem,
   type ShowDetails,
 } from "@/lib/tmdb";
-import { img300, img500, img1920, unavailable } from "@/lib/links";
+import { img500, img1920, unavailable } from "@/lib/links";
 
 export default function ShowDetailPageClient({ id }: { id: string }) {
   const [content, setContent] = useState<ShowDetails | null>(null);
@@ -67,35 +72,35 @@ export default function ShowDetailPageClient({ id }: { id: string }) {
 
   if (!hasApiKey) {
     return (
-      <main className="main-page">
+      <PageShell>
         <StatusMessage
           title="TMDB API key missing"
           message="Set NEXT_PUBLIC_TMDB_API in your local environment or Netlify site settings to load TV show details."
           actionHref="/shows"
           actionLabel="All TV shows"
         />
-      </main>
+      </PageShell>
     );
   }
 
   if (loading) {
     return (
-      <Container>
-        <h2>Loading...</h2>
-      </Container>
+      <PageShell>
+        <LoadingSkeleton />
+      </PageShell>
     );
   }
 
   if (!content) {
     return (
-      <main className="main-page">
+      <PageShell>
         <StatusMessage
           title="Unable to load this TV show"
           message={error || "Sorry. We couldn't load this TV show."}
           actionHref="/shows"
           actionLabel="All TV shows"
         />
-      </main>
+      </PageShell>
     );
   }
 
@@ -135,103 +140,65 @@ export default function ShowDetailPageClient({ id }: { id: string }) {
     : [];
 
   return (
-    <main>
-      <div
-        style={{
-          minHeight: "100%",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundImage: backdrop_path
-            ? `url(${img1920}${backdrop_path})`
-            : undefined,
-        }}
-      >
-        <Box
-          component="div"
-          sx={{
-            p: { xs: "2rem 1rem", sm: "2rem", md: "3rem" },
-            backgroundImage:
-              "linear-gradient(to right, rgba(9.02%, 5.10%, 5.49%, 1.00) 150px, rgba(9.02%, 5.10%, 5.49%, 0.84) 100%)",
-          }}
-        >
-          <Grid container spacing={3}>
+    <main className="detail-page">
+      <section className="detail-hero">
+        {backdrop_path ? (
+          <div
+            className="detail-backdrop"
+            style={{ backgroundImage: `url(${img1920}${backdrop_path})` }}
+          />
+        ) : null}
+        <div className="detail-overlay" />
+        <div className="detail-content page-container">
+          <Grid container spacing={4} alignItems="center">
             <Grid size={{ xs: 12, sm: 4, md: 3 }}>
-              <div style={{ maxWidth: "100%", height: "auto" }}>
+              <div className="detail-poster">
                 <Image
                   src={poster_path ? `${img500}${poster_path}` : unavailable}
-                  alt={name || "TV show poster"}
+                  alt={`${name || "TV show"} poster`}
                   width={500}
                   height={750}
-                  style={{ width: "100%", height: "auto" }}
+                  priority
                 />
               </div>
             </Grid>
-
             <Grid size={{ xs: 12, sm: 8, md: 9 }}>
-              <Box
-                component="div"
-                sx={{
-                  color: "white",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "1rem",
-                }}
-              >
-                <Typography
-                  variant="h4"
-                  component="h1"
-                  sx={{ color: "white" }}
-                >
-                  {cardTitle}{" "}
-                  {typeof vote_average === "number" && (
-                    <Button variant="outlined" color="warning">
-                      IMDb: {vote_average}
-                    </Button>
-                  )}
+              <div className="detail-copy glass-panel">
+                <p className="eyebrow">TV Show</p>
+                <Typography variant="h3" component="h1">
+                  {cardTitle}
                 </Typography>
-                {tagline ? (
-                  <Typography
-                    variant="body2"
-                    sx={{ fontStyle: "italic", color: "gray" }}
-                    gutterBottom
-                  >
-                    {tagline}
-                  </Typography>
-                ) : null}
-                {overview ? <p>{overview}</p> : null}
-                <div>
+                <div className="hero-meta">
+                  {year ? <span>{year}</span> : null}
+                  {number_of_seasons ? <span>{number_of_seasons} seasons</span> : null}
+                  <RatingBadge rating={vote_average} />
+                </div>
+                {tagline ? <p className="detail-tagline">{tagline}</p> : null}
+                {overview ? <p className="detail-overview">{overview}</p> : null}
+                <div className="detail-facts">
                   {creatorList.length > 0 ? (
                     <p>
-                      <strong>Creator</strong>:{" "}
-                      <span>{creatorList.join(", ")}</span>
+                      <strong>Creator</strong> {creatorList.join(", ")}
                     </p>
                   ) : null}
                   {genreList.length > 0 ? (
                     <p>
-                      <strong>Genre</strong>:{" "}
-                      <span>{genreList.join(", ")}</span>
+                      <strong>Genre</strong> <span>{genreList.join(", ")}</span>
                     </p>
                   ) : null}
                 </div>
                 {videoList.length > 0 ? (
                   <TrailerButton title={cardTitle} videoKey={videoList[0].key} />
                 ) : null}
-              </Box>
+              </div>
             </Grid>
           </Grid>
-        </Box>
-      </div>
-      <Box
-        component="div"
-        sx={{
-          p: { xs: "2rem 1rem", sm: "2rem", md: "3rem" },
-        }}
-      >
+        </div>
+      </section>
+      <section className="detail-section page-container">
         <Grid container spacing={4}>
-          <Grid size={{ xs: 12, sm: 8 }}>
-            <Typography variant="h5" component="h2" gutterBottom>
-              Show Cast
-            </Typography>
+          <Grid size={{ xs: 12, md: 8 }}>
+            <SectionHeader title="Show Cast" />
             {peopleList.length > 0 ? (
               <div className="scroller-wrap is-fading">
                 <div className="scroller">
@@ -242,142 +209,93 @@ export default function ShowDetailPageClient({ id }: { id: string }) {
               </div>
             ) : null}
           </Grid>
-
-          <Grid size={{ xs: 12, sm: 4 }}>
-            <Typography variant="h5" component="h2" gutterBottom>
-              Information
-            </Typography>
-            {original_name ? (
-              <p>
-                <strong>Original name</strong>: {original_name}
-              </p>
-            ) : null}
-            {status ? (
-              <p>
-                <strong>Status</strong>: {status}
-              </p>
-            ) : null}
-            {networkList.length > 0 ? (
-              <p>
-                <strong>Networks</strong>: <span>{networkList.join(", ")}</span>
-              </p>
-            ) : null}
-            {first_air_date ? (
-              <p>
-                <strong>First air date</strong>: {dateConvert(first_air_date)}
-              </p>
-            ) : null}
-            {last_air_date ? (
-              <p>
-                <strong>Last air date</strong>: {dateConvert(last_air_date)}
-              </p>
-            ) : null}
-            {number_of_seasons ? (
-              <p>
-                <strong>No. of seasons</strong>: {number_of_seasons}
-              </p>
-            ) : null}
-            {number_of_episodes ? (
-              <p>
-                <strong>No. of episodes</strong>: {number_of_episodes}
-              </p>
-            ) : null}
-            {budget ? (
-              <p>
-                <strong>Budget</strong>: ${budget.toLocaleString("en-US")}
-              </p>
-            ) : null}
-            {revenue ? (
-              <p>
-                <strong>Revenue</strong>: ${revenue.toLocaleString("en-US")}
-              </p>
-            ) : null}
-            {production_companies ? (
-              <div>
+          <Grid size={{ xs: 12, md: 4 }}>
+            <aside className="detail-info-panel glass-panel">
+              <h2>Information</h2>
+              {original_name ? (
                 <p>
-                  <strong>Production companies</strong>
+                  <strong>Original name</strong>: {original_name}
                 </p>
-                <ul>
-                  {production_companies.map((company) => (
-                    <li key={company.id}>{company.name}</li>
+              ) : null}
+              {status ? (
+                <p>
+                  <strong>Status</strong>: {status}
+                </p>
+              ) : null}
+              {networkList.length > 0 ? (
+                <p>
+                  <strong>Networks</strong>: {networkList.join(", ")}
+                </p>
+              ) : null}
+              {first_air_date ? (
+                <p>
+                  <strong>First air date</strong>: {dateConvert(first_air_date)}
+                </p>
+              ) : null}
+              {last_air_date ? (
+                <p>
+                  <strong>Last air date</strong>: {dateConvert(last_air_date)}
+                </p>
+              ) : null}
+              {number_of_episodes ? (
+                <p>
+                  <strong>Episodes</strong>: {number_of_episodes}
+                </p>
+              ) : null}
+              {budget ? (
+                <p>
+                  <strong>Budget</strong>: ${budget.toLocaleString("en-US")}
+                </p>
+              ) : null}
+              {revenue ? (
+                <p>
+                  <strong>Revenue</strong>: ${revenue.toLocaleString("en-US")}
+                </p>
+              ) : null}
+              {production_companies ? (
+                <div>
+                  <p>
+                    <strong>Production companies</strong>
+                  </p>
+                  <ul>
+                    {production_companies.map((company) => (
+                      <li key={company.id}>{company.name}</li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+              {keywords ? (
+                <div className="keyword-list">
+                  {keywords.results.map((keyword) => (
+                    <span className="keyword-pill" key={keyword.id}>
+                      {keyword.name}
+                    </span>
                   ))}
-                </ul>
-              </div>
-            ) : null}
-            {keywords ? (
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "10px",
-                  marginTop: "0.5rem",
-                }}
-              >
-                {keywords.results.map((keyword) => (
-                  <Button variant="outlined" disabled key={keyword.id}>
-                    {keyword.name}
-                  </Button>
-                ))}
-              </div>
-            ) : null}
+                </div>
+              ) : null}
+            </aside>
           </Grid>
         </Grid>
         {similar ? <ShowRecommendations similar={similar.results} /> : null}
-      </Box>
+      </section>
     </main>
   );
 }
 
 function ShowRecommendations({ similar }: { similar: MediaItem[] }) {
   return (
-    <div>
-      <hr style={{ margin: "1rem 0" }} />
-      <Typography variant="h5" component="h2" gutterBottom>
-        You may also like
-      </Typography>
-      <div className="scroller-wrap is-fading">
-        <div className="scroller">
-          {similar.slice(0, 9).map((show) => (
-            <Link href={`/show/${show.id}`} key={show.id}>
-              <Box
-                sx={{
-                  position: "relative",
-                  display: "inline-block",
-                  lineHeight: 0,
-                }}
-              >
-                <Image
-                  src={
-                    show.poster_path ? `${img300}${show.poster_path}` : unavailable
-                  }
-                  alt={show.name || "Similar TV show"}
-                  width={300}
-                  height={450}
-                  style={{ width: "100%", height: "auto" }}
-                />
-                <div className="movie-info">
-                  <p style={{ marginBottom: "0" }}>{show.name}</p>
-                </div>
-              </Box>
-            </Link>
-          ))}
-        </div>
+    <section className="content-section">
+      <SectionHeader title="You may also like" />
+      <div className="media-row">
+        {similar.slice(0, 9).map((show) => (
+          <MediaCard item={{ ...show, media_type: "tv" }} compact key={show.id} />
+        ))}
       </div>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
+      <div className="center-actions">
         <Link href="/shows">
-          <Button
-            variant="contained"
-            sx={{ backgroundColor: "black", color: "white", mt: 2 }}
-          >
-            All TV shows
-          </Button>
+          <Button variant="contained">All TV shows</Button>
         </Link>
-      </Box>
-    </div>
+      </div>
+    </section>
   );
 }

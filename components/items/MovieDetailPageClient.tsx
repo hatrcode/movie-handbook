@@ -3,17 +3,22 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Typography, Button, Grid, Box, Container } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import PeopleCard from "@/components/items/PeopleCard";
 import TrailerButton from "@/components/items/TrailerButton";
 import { StatusMessage } from "@/components/StatusMessage";
+import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
+import MediaCard from "@/components/ui/MediaCard";
+import PageShell from "@/components/ui/PageShell";
+import RatingBadge from "@/components/ui/RatingBadge";
+import SectionHeader from "@/components/ui/SectionHeader";
 import {
   buildDetailUrl,
   hasTmdbApiKey,
   type MediaItem,
   type MovieDetails,
 } from "@/lib/tmdb";
-import { img300, img500, img1920, unavailable } from "@/lib/links";
+import { img500, img1920, unavailable } from "@/lib/links";
 
 export default function MovieDetailPageClient({ id }: { id: string }) {
   const [content, setContent] = useState<MovieDetails | null>(null);
@@ -66,35 +71,35 @@ export default function MovieDetailPageClient({ id }: { id: string }) {
 
   if (!hasApiKey) {
     return (
-      <main className="main-page">
+      <PageShell>
         <StatusMessage
           title="TMDB API key missing"
           message="Set NEXT_PUBLIC_TMDB_API in your local environment or Netlify site settings to load movie details."
           actionHref="/movies"
           actionLabel="All movies"
         />
-      </main>
+      </PageShell>
     );
   }
 
   if (loading) {
     return (
-      <Container>
-        <h2>Loading...</h2>
-      </Container>
+      <PageShell>
+        <LoadingSkeleton />
+      </PageShell>
     );
   }
 
   if (!content) {
     return (
-      <main className="main-page">
+      <PageShell>
         <StatusMessage
           title="Unable to load this movie"
           message={error || "Sorry. We couldn't load this movie."}
           actionHref="/movies"
           actionLabel="All movies"
         />
-      </main>
+      </PageShell>
     );
   }
 
@@ -134,79 +139,49 @@ export default function MovieDetailPageClient({ id }: { id: string }) {
     : [];
 
   return (
-    <main>
-      <div
-        style={{
-          minHeight: "100%",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundImage: backdrop_path
-            ? `url(${img1920}${backdrop_path})`
-            : undefined,
-        }}
-      >
-        <Box
-          component="div"
-          sx={{
-            p: { xs: "2rem 1rem", sm: "2rem", md: "3rem" },
-            backgroundImage:
-              "linear-gradient(to right, rgba(9.02%, 5.10%, 5.49%, 1.00) 150px, rgba(9.02%, 5.10%, 5.49%, 0.84) 100%)",
-          }}
-        >
-          <Grid container spacing={3}>
+    <main className="detail-page">
+      <section className="detail-hero">
+        {backdrop_path ? (
+          <div
+            className="detail-backdrop"
+            style={{ backgroundImage: `url(${img1920}${backdrop_path})` }}
+          />
+        ) : null}
+        <div className="detail-overlay" />
+        <div className="detail-content page-container">
+          <Grid container spacing={4} alignItems="center">
             <Grid size={{ xs: 12, sm: 4, md: 3 }}>
-              <div style={{ maxWidth: "100%", height: "auto" }}>
+              <div className="detail-poster">
                 <Image
                   src={poster_path ? `${img500}${poster_path}` : unavailable}
-                  alt={title || "Movie poster"}
+                  alt={`${title || "Movie"} poster`}
                   width={500}
                   height={750}
-                  style={{ width: "100%", height: "auto" }}
+                  priority
                 />
               </div>
             </Grid>
             <Grid size={{ xs: 12, sm: 8, md: 9 }}>
-              <Box component="div" sx={{ color: "white" }}>
-                <Typography
-                  variant="h4"
-                  component="h1"
-                  sx={{ color: "white" }}
-                  gutterBottom
-                >
-                  {cardTitle}{" "}
-                  {typeof vote_average === "number" && (
-                    <Button variant="outlined" color="warning">
-                      IMDb: {vote_average}
-                    </Button>
-                  )}
+              <div className="detail-copy glass-panel">
+                <p className="eyebrow">Movie</p>
+                <Typography variant="h3" component="h1">
+                  {cardTitle}
                 </Typography>
-                {tagline ? (
-                  <Typography
-                    variant="body2"
-                    sx={{ fontStyle: "italic", color: "gray" }}
-                    gutterBottom
-                  >
-                    {tagline}
-                  </Typography>
-                ) : null}
-                {overview ? <p>{overview}</p> : null}
-                <div>
-                  {year ? (
-                    <p>
-                      <strong>Released</strong>: {year}
-                    </p>
-                  ) : null}
+                <div className="hero-meta">
+                  {year ? <span>{year}</span> : null}
                   {runtime ? (
-                    <p>
-                      <strong>Duration</strong>: {Math.floor(runtime / 60)}h{" "}
-                      {runtime % 60}m
-                    </p>
+                    <span>
+                      {Math.floor(runtime / 60)}h {runtime % 60}m
+                    </span>
                   ) : null}
+                  <RatingBadge rating={vote_average} />
                 </div>
-                <div>
+                {tagline ? <p className="detail-tagline">{tagline}</p> : null}
+                {overview ? <p className="detail-overview">{overview}</p> : null}
+                <div className="detail-facts">
                   {directorList.length > 0 ? (
                     <p>
-                      <strong>Director</strong>:{" "}
+                      <strong>Director</strong>{" "}
                       {directorList.map((director) => (
                         <span key={director.id}>{director.name}</span>
                       ))}
@@ -214,31 +189,23 @@ export default function MovieDetailPageClient({ id }: { id: string }) {
                   ) : null}
                   {genreList.length > 0 ? (
                     <p>
-                      <strong>Genre</strong>:{" "}
-                      <span>{genreList.join(", ")}</span>
+                      <strong>Genre</strong> <span>{genreList.join(", ")}</span>
                     </p>
                   ) : null}
                 </div>
                 {videoList.length > 0 ? (
                   <TrailerButton title={cardTitle} videoKey={videoList[0].key} />
                 ) : null}
-              </Box>
+              </div>
             </Grid>
           </Grid>
-        </Box>
-      </div>
-      <Box
-        component="div"
-        sx={{
-          p: { xs: "2rem 1rem", sm: "2rem", md: "3rem" },
-        }}
-      >
+        </div>
+      </section>
+      <section className="detail-section page-container">
         <Grid container spacing={4}>
           {peopleList.length > 0 ? (
-            <Grid size={{ xs: 12, sm: 8 }}>
-              <Typography variant="h5" component="h2" gutterBottom>
-                Top Cast
-              </Typography>
+            <Grid size={{ xs: 12, md: 8 }}>
+              <SectionHeader title="Top Cast" />
               <div className="scroller-wrap is-fading">
                 <div className="scroller">
                   {peopleList.map((people) => (
@@ -248,115 +215,72 @@ export default function MovieDetailPageClient({ id }: { id: string }) {
               </div>
             </Grid>
           ) : null}
-          <Grid size={{ xs: 12, sm: 4 }}>
-            {status ? (
-              <p>
-                <strong>Status</strong>: {status}
-              </p>
-            ) : null}
-            {budget ? (
-              <p>
-                <strong>Budget</strong>: ${budget.toLocaleString("en-US")}
-              </p>
-            ) : null}
-            {revenue ? (
-              <p>
-                <strong>Revenue</strong>: ${revenue.toLocaleString("en-US")}
-              </p>
-            ) : null}
-            {production_companies ? (
-              <div>
+          <Grid size={{ xs: 12, md: 4 }}>
+            <aside className="detail-info-panel glass-panel">
+              <h2>Information</h2>
+              {status ? (
                 <p>
-                  <strong>Production companies</strong>
+                  <strong>Status</strong>: {status}
                 </p>
-                <ul>
-                  {production_companies.map((company) => (
-                    <li key={company.id}>{company.name}</li>
+              ) : null}
+              {budget ? (
+                <p>
+                  <strong>Budget</strong>: ${budget.toLocaleString("en-US")}
+                </p>
+              ) : null}
+              {revenue ? (
+                <p>
+                  <strong>Revenue</strong>: ${revenue.toLocaleString("en-US")}
+                </p>
+              ) : null}
+              {production_companies ? (
+                <div>
+                  <p>
+                    <strong>Production companies</strong>
+                  </p>
+                  <ul>
+                    {production_companies.map((company) => (
+                      <li key={company.id}>{company.name}</li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+              {keywords ? (
+                <div className="keyword-list">
+                  {keywords.keywords.map((keyword) => (
+                    <span className="keyword-pill" key={keyword.id}>
+                      {keyword.name}
+                    </span>
                   ))}
-                </ul>
-              </div>
-            ) : null}
-            {keywords ? (
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "10px",
-                  marginTop: "0.5rem",
-                }}
-              >
-                {keywords.keywords.map((keyword) => (
-                  <Button variant="outlined" disabled key={keyword.id}>
-                    {keyword.name}
-                  </Button>
-                ))}
-              </div>
-            ) : null}
+                </div>
+              ) : null}
+            </aside>
           </Grid>
         </Grid>
         {similar ? <MovieRecommendations similar={similar.results} /> : null}
-      </Box>
+      </section>
     </main>
   );
 }
 
 function MovieRecommendations({ similar }: { similar: MediaItem[] }) {
   return (
-    <div>
-      <hr style={{ margin: "1rem 0" }} />
-      <Typography variant="h5" component="h2" gutterBottom>
-        You may also like
-      </Typography>
-      <div className="scroller-wrap is-fading">
-        <div className="scroller">
-          {similar.slice(0, 9).map((movie) => (
-            <Box
-              key={movie.id}
-              sx={{ minWidth: { xs: 100, sm: 150, md: 175 } }}
-            >
-              <Link href={`/movie/${movie.id}`}>
-                <Box
-                  sx={{
-                    position: "relative",
-                    display: "inline-block",
-                    lineHeight: 0,
-                  }}
-                >
-                  <Image
-                    src={
-                      movie.poster_path
-                        ? `${img300}${movie.poster_path}`
-                        : unavailable
-                    }
-                    alt={movie.title || "Similar movie"}
-                    width={300}
-                    height={450}
-                    style={{ width: "100%", height: "auto" }}
-                  />
-                  <div className="movie-info">
-                    <p style={{ marginBottom: "0" }}>{movie.title}</p>
-                  </div>
-                </Box>
-              </Link>
-            </Box>
-          ))}
-        </div>
+    <section className="content-section">
+      <SectionHeader title="You may also like" />
+      <div className="media-row">
+        {similar.slice(0, 9).map((movie) => (
+          <MediaCard
+            item={{ ...movie, media_type: "movie" }}
+            compact
+            key={movie.id}
+          />
+        ))}
       </div>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
+      <div className="center-actions">
         <Link href="/movies">
-          <Button
-            variant="contained"
-            sx={{ backgroundColor: "black", color: "white", mt: 2 }}
-          >
-            All movies
-          </Button>
+          <Button variant="contained">All movies</Button>
         </Link>
-      </Box>
-    </div>
+      </div>
+    </section>
   );
 }

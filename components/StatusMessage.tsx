@@ -13,7 +13,7 @@ export function StatusMessage({
   actionLabel?: string;
 }) {
   return (
-    <div className="status-message" role="status">
+    <div className="status-message glass-panel" role="status">
       <h2>{title}</h2>
       <p>{message}</p>
       {actionHref && actionLabel ? (

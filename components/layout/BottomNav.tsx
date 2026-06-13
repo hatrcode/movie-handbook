@@ -2,14 +2,24 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { Whatshot, Movie, Tv, Search } from "@mui/icons-material";
 
 export default function BottomNav() {
-  const [value, setValue] = useState(0);
+  const pathname = usePathname();
+  const initialValue = pathname.startsWith("/movies")
+    ? 1
+    : pathname.startsWith("/shows")
+      ? 2
+      : pathname.startsWith("/trending")
+        ? 3
+        : 0;
+  const [value, setValue] = useState(initialValue);
 
   return (
     <BottomNavigation
+      className="bottom-nav"
       showLabels
       value={value}
       onChange={(event, newValue) => {

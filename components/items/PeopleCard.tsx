@@ -6,7 +6,7 @@ export default function PeopleCard({ people }: { people: PersonCredit }) {
   const { name, character, profile_path } = people;
 
   return (
-    <Card sx={{ minWidth: 138 }}>
+    <Card sx={{ minWidth: 150 }}>
       <CardMedia
         component="img"
         alt={name}

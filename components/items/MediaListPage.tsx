@@ -7,6 +7,9 @@ import ItemCards from "@/components/items/ItemCards";
 import ItemPagination from "@/components/items/ItemPagination";
 import { useTmdbList } from "@/components/items/useTmdbList";
 import { StatusMessage } from "@/components/StatusMessage";
+import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
+import PageShell from "@/components/ui/PageShell";
+import SectionHeader from "@/components/ui/SectionHeader";
 import {
   buildMediaListUrl,
   hasTmdbApiKey,
@@ -33,10 +36,17 @@ export default function MediaListPage({
   const { content, numOfPages, loading, error } = useTmdbList(url);
 
   return (
-    <main className="main-page">
-      <Typography variant="h3" component="h1" gutterBottom align="center">
-        {title}
-      </Typography>
+    <PageShell>
+      <div className="page-intro glass-panel">
+        <p className="eyebrow">{mediaType === "movie" ? "Movies" : "TV Shows"}</p>
+        <Typography variant="h3" component="h1">
+          {title}
+        </Typography>
+        <p>
+          Browse curated TMDB results with quick ratings, stable poster grids
+          and genre filters.
+        </p>
+      </div>
       {!hasApiKey ? (
         <StatusMessage
           title="TMDB API key missing"
@@ -52,11 +62,7 @@ export default function MediaListPage({
           setPage={setPage}
         />
       )}
-      {loading && (
-        <Typography variant="h4" gutterBottom align="center">
-          Loading...
-        </Typography>
-      )}
+      {loading && <LoadingSkeleton />}
       {error && !loading ? (
         <StatusMessage title="Unable to load TMDB data" message={error} />
       ) : null}
@@ -66,10 +72,15 @@ export default function MediaListPage({
           message="TMDB did not return any items for this page."
         />
       ) : null}
-      {content.length > 0 && <ItemCards content={content} />}
+      {content.length > 0 && (
+        <section className="content-section">
+          <SectionHeader title="Results" />
+          <ItemCards content={content} />
+        </section>
+      )}
       {numOfPages > 1 && (
         <ItemPagination setPage={setPage} numOfPages={numOfPages} />
       )}
-    </main>
+    </PageShell>
   );
 }

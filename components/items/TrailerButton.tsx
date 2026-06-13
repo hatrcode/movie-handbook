@@ -14,7 +14,7 @@ export default function TrailerButton({
   const [open, setOpen] = useState(false);
 
   return (
-    <div>
+    <div className="trailer-button">
       <Button
         variant="contained"
         startIcon={<YouTubeIcon />}

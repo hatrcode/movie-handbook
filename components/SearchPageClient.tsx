@@ -7,6 +7,9 @@ import { Button, Typography } from "@mui/material";
 import SearchBar from "@/components/SearchBar";
 import { StatusMessage } from "@/components/StatusMessage";
 import ItemCards from "@/components/items/ItemCards";
+import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
+import PageShell from "@/components/ui/PageShell";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { buildSearchUrl, hasTmdbApiKey, type MediaItem } from "@/lib/tmdb";
 
 export default function SearchPageClient() {
@@ -61,19 +64,24 @@ export default function SearchPageClient() {
   }, [hasApiKey, query]);
 
   return (
-    <main className="main-page">
+    <PageShell>
       {!query ? (
-        <div>
-          <Typography variant="h2">Search</Typography>
-          <div style={{ marginTop: "1rem" }}>
+        <section className="search-page-panel glass-panel">
+          <p className="eyebrow">Search the catalogue</p>
+          <Typography variant="h2" component="h1">
+            Find movies, shows and people
+          </Typography>
+          <p>
+            Search TMDB and open a title to see details, trailers, cast and
+            recommendations.
+          </p>
+          <div className="search-panel-control">
             <SearchBar />
           </div>
-        </div>
+        </section>
       ) : (
-        <div>
-          <Typography variant="h2" align="center" gutterBottom>
-            Search results
-          </Typography>
+        <section className="content-section">
+          <SectionHeader eyebrow="Search" title={`Results for "${query}"`} />
           {!hasApiKey ? (
             <StatusMessage
               title="TMDB API key missing"
@@ -81,9 +89,7 @@ export default function SearchPageClient() {
             />
           ) : null}
           {loading && (
-            <Typography variant="h4" gutterBottom align="center">
-              Searching...
-            </Typography>
+            <LoadingSkeleton />
           )}
           {error && !loading ? (
             <StatusMessage title="Unable to search TMDB" message={error} />
@@ -99,8 +105,8 @@ export default function SearchPageClient() {
             </div>
           )}
           {content.length > 0 && <ItemCards content={content} />}
-        </div>
+        </section>
       )}
-    </main>
+    </PageShell>
   );
 }

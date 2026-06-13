@@ -22,14 +22,18 @@ export default function MobileMenu() {
   const [open3, setOpen3] = useState(false);
 
   return (
-    <Box sx={{ width: 250 }} role="presentation">
+    <Box sx={{ width: 290 }} role="presentation" className="mobile-menu">
       <List
-        sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+        sx={{ width: "100%", maxWidth: 360 }}
         component="nav"
         aria-labelledby="nested-list-subheader"
         subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
-            Menu
+          <ListSubheader
+            component="div"
+            id="nested-list-subheader"
+            className="mobile-menu-title"
+          >
+            Movie Handbook
           </ListSubheader>
         }
       >

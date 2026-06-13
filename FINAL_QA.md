@@ -1,10 +1,26 @@
 # Final QA
 
+## 2026 Visual Redesign Pass
+
+- Redesigned the site around a dark cinematic visual system with near-black backgrounds, glass panels, red/purple/blue/amber accents, rounded poster cards, premium nav, and responsive page shells.
+- Added reusable UI components:
+  - `PageShell`
+  - `SectionHeader`
+  - `HeroBanner`
+  - `MediaCard`
+  - `RatingBadge`
+  - `LoadingSkeleton`
+- Homepage now has a poster-led hero, Trending Now, Popular Movies, Popular Shows, and a search CTA. If `NEXT_PUBLIC_TMDB_API` is missing, it keeps the clear missing-key state.
+- Listing, trending, and search pages now use consistent section headers, poster grids/rows, skeleton loading states, and glass empty/error panels.
+- Movie/show detail pages now use a cinematic backdrop hero with poster, title, metadata, rating, overview, trailer CTA, cast scroller, info panel, keywords, and related media cards.
+- Header/nav is sticky with translucent dark glass styling, active desktop states, keyboard-open dropdowns, and a dark mobile drawer.
+- Footer was restyled to match the dark system.
+
 ## Build and Tooling
 
 - `npm install`: passed after regenerating `package-lock.json` from the Next.js dependency set.
-- `npm run lint`: passed on the final QA pass.
-- `npm run build`: passed on the final QA pass.
+- `npm run lint`: passed after the redesign pass.
+- `npm run build`: passed after the redesign pass.
 - `npm run dev`: passed; local server started at `http://localhost:3000`.
 - `npm run start -- --port 3001`: passed after `npm run build`; production server route checks returned the expected statuses listed below.
 - `npm audit --audit-level=moderate`: reports 2 moderate vulnerabilities through Next's current `postcss` dependency. npm suggests `npm audit fix --force`, but that would downgrade Next to `9.3.3`, so it was not applied.
@@ -41,6 +57,16 @@ The missing-key state was also checked in production HTML without `NEXT_PUBLIC_T
 | `/movie/580489` | Present |
 | `/shows` | Present |
 | `/show/71446` | Present |
+
+## Redesign Page Checks
+
+- `/`: redesigned homepage shell, cinematic hero fallback, search CTA, and API-key state checked.
+- `/movies`, `/movies/upcoming`, `/movies/top-rated`: redesigned intro, genre filters, loading/error/empty states, and poster grid checked.
+- `/shows`, `/shows/airing-today`, `/shows/top-rated`: redesigned intro, genre filters, loading/error/empty states, and poster grid checked.
+- `/trending`: redesigned page intro, loading/error/empty states, and poster grid checked.
+- `/search`: redesigned empty search panel and result state checked.
+- `/movie/580489` and `/show/71446`: redesigned missing-key/detail shell checked. Full live TMDB detail rendering still needs `NEXT_PUBLIC_TMDB_API`.
+- `/series` and `/tv/71446`: redirects checked.
 
 ## Live Gatsby Comparison
 
@@ -89,7 +115,8 @@ The migrated app preserves the listing route surface and improves legacy/incorre
 - Added social-link accessible labels.
 - Added MUI's App Router cache provider to avoid Emotion hydration/style-order mismatches.
 - Dev server logs were rechecked after the provider fix; no hydration errors appeared during route checks.
-- Desktop/mobile layout was reviewed from the code and route output. The app keeps the original no-redesign spacing baseline, with small stability fixes for search inputs, poster grids, and status messages.
+- Desktop/mobile layout was reviewed from the code and route output. The redesign uses responsive shells, poster rows, mobile two-column grids, sticky glass nav, dark mobile drawer, and bottom nav on small screens.
+- Browser screenshot/mobile QA was not completed because this workspace has no Chromium/Chrome/Playwright runtime installed.
 
 ## Data and Environment
 

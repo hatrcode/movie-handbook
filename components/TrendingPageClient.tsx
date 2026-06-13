@@ -7,6 +7,9 @@ import ItemCards from "@/components/items/ItemCards";
 import ItemPagination from "@/components/items/ItemPagination";
 import { useTmdbList } from "@/components/items/useTmdbList";
 import { StatusMessage } from "@/components/StatusMessage";
+import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
+import PageShell from "@/components/ui/PageShell";
+import SectionHeader from "@/components/ui/SectionHeader";
 import {
   buildTrendingUrl,
   hasTmdbApiKey,
@@ -33,21 +36,21 @@ export default function TrendingPageClient() {
   }
 
   return (
-    <main className="main-page">
-      <Typography variant="h3" component="h1" gutterBottom align="center">
-        Trending {type} this {time}
-      </Typography>
+    <PageShell>
+      <div className="page-intro glass-panel">
+        <p className="eyebrow">Trending</p>
+        <Typography variant="h3" component="h1">
+          Trending {type} this {time}
+        </Typography>
+        <p>See what audiences are watching across TMDB right now.</p>
+      </div>
       {!hasApiKey ? (
         <StatusMessage
           title="TMDB API key missing"
           message="Set NEXT_PUBLIC_TMDB_API in your local environment or Netlify site settings to load trending movie and TV data."
         />
       ) : null}
-      {loading && (
-        <Typography variant="h4" gutterBottom align="center">
-          Loading...
-        </Typography>
-      )}
+      {loading && <LoadingSkeleton />}
       {error && !loading ? (
         <StatusMessage title="Unable to load trending data" message={error} />
       ) : null}
@@ -57,10 +60,15 @@ export default function TrendingPageClient() {
           message="TMDB did not return any trending items for this page."
         />
       ) : null}
-      {content.length > 0 && <ItemCards content={content} />}
+      {content.length > 0 && (
+        <section className="content-section">
+          <SectionHeader title="Trending results" />
+          <ItemCards content={content} />
+        </section>
+      )}
       {numOfPages > 1 && (
         <ItemPagination setPage={setPage} numOfPages={numOfPages} />
       )}
-    </main>
+    </PageShell>
   );
 }

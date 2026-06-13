@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Drawer, Box, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -12,9 +13,10 @@ import { movies, shows, trending } from "@/lib/nav-links";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
-    <nav>
+    <nav className="site-nav">
       <div className="nav-center">
         <div className="nav-header">
           <IconButton
@@ -38,13 +40,36 @@ export default function Navbar() {
             </Link>
           </Box>
         </div>
-        <Box component="div" sx={{ display: { xs: "none", md: "block" } }}>
-          <SubNavDrop main="Movies" url="/movies" sub={movies} />
-          <SubNavDrop main="Tv Shows" url="/shows" sub={shows} />
-          <SubNavDrop main="Trending" url="/trending" sub={trending} />
+        <Box
+          component="div"
+          className="nav-links"
+          sx={{ display: { xs: "none", md: "flex" } }}
+        >
+          <SubNavDrop
+            main="Movies"
+            url="/movies"
+            sub={movies}
+            active={pathname.startsWith("/movie") || pathname.startsWith("/movies")}
+          />
+          <SubNavDrop
+            main="TV Shows"
+            url="/shows"
+            sub={shows}
+            active={pathname.startsWith("/show") || pathname.startsWith("/shows")}
+          />
+          <SubNavDrop
+            main="Trending"
+            url="/trending"
+            sub={trending}
+            active={pathname.startsWith("/trending")}
+          />
         </Box>
         <Box component="div" sx={{ display: { xs: "block" } }}>
-          <Drawer open={mobileOpen} onClose={() => setMobileOpen(!mobileOpen)}>
+          <Drawer
+            open={mobileOpen}
+            onClose={() => setMobileOpen(!mobileOpen)}
+            PaperProps={{ className: "mobile-drawer" }}
+          >
             <MobileMenu />
           </Drawer>
         </Box>

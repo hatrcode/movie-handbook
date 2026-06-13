@@ -70,7 +70,7 @@ export default function Genres({
   }, [setGenres, type]);
 
   return (
-    <div style={{ padding: "6px 0" }}>
+    <div className="genre-filter">
       {selectedGenres.map((genre) => (
         <Chip
           style={{ margin: 2 }}
